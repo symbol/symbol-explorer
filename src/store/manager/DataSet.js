@@ -27,7 +27,7 @@ export default class DataSet {
     this.initialFuntion = initialFuntion
     this.DataType = DataType
     this.data = new DataType()
-    this.loading = false
+    this.loading = true
     this.error = false
   }
 

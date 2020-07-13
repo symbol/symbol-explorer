@@ -18,6 +18,7 @@
 
 import Lock from './lock'
 import Constants from '../config/constants'
+import helper from '../helper'
 import {
   AccountService,
   MosaicService,
@@ -165,18 +166,21 @@ export default {
     },
 
     // Fetch data from the SDK By Address.
-    fetchAccountDetail(context, address) {
-      context.dispatch('uninitializeDetail')
-      context.commit('setCurrentAccountAddress', address)
+    async fetchAccountDetail(context, payload) {
+      if (!helper.isAccountAddress(payload.address))
+        payload.address = await helper.decodeToAddress(payload.address)
 
-      context.getters.info.setStore(context).initialFetch(address)
-      context.getters.OwnedMosaic.setStore(context).initialFetch(address)
-      context.getters.OwnedNamespace.setStore(context).initialFetch(address)
-      context.getters.multisig.setStore(context).initialFetch(address)
-      context.getters.transactions.setStore(context).initialFetch(address)
-      context.getters.metadatas.setStore(context).initialFetch(address)
-      context.getters.restrictions.setStore(context).initialFetch(address)
-      context.getters.partialTransactions.setStore(context).initialFetch(address)
+      context.dispatch('uninitializeDetail')
+      context.commit('setCurrentAccountAddress', payload.address)
+
+      context.getters.info.setStore(context).initialFetch(payload.address)
+      context.getters.OwnedMosaic.setStore(context).initialFetch(payload.address)
+      context.getters.OwnedNamespace.setStore(context).initialFetch(payload.address)
+      context.getters.multisig.setStore(context).initialFetch(payload.address)
+      context.getters.transactions.setStore(context).initialFetch(payload.address)
+      context.getters.metadatas.setStore(context).initialFetch(payload.address)
+      context.getters.restrictions.setStore(context).initialFetch(payload.address)
+      context.getters.partialTransactions.setStore(context).initialFetch(payload.address)
     },
 
     uninitializeDetail(context) {

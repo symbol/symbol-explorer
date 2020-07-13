@@ -81,7 +81,7 @@ class ReceiptService {
           size: receipt.size || Constants.Message.UNAVAILABLE,
           type: Constants.ReceiptType[receipt.type],
           targetPublicAccount: receipt.targetPublicAccount.address.plain(),
-          amount: helper.formatMosaicAmountWithDivisibility(receipt.amount, Constants.NetworkConfig.NATIVE_MOSAIC_DIVISIBILITY),
+          amount: helper.formatMosaicAmountWithDivisibility(receipt.amount, http.networkCurrecy.divisibility),
           mosaicId: receipt.mosaicId.toHex()
         })
         break
@@ -94,7 +94,7 @@ class ReceiptService {
           type: Constants.ReceiptType[receipt.type],
           sender: receipt.sender.address.plain(),
           recipientAddress: receipt.recipientAddress.address,
-          amount: helper.formatMosaicAmountWithDivisibility(receipt.amount, Constants.NetworkConfig.NATIVE_MOSAIC_DIVISIBILITY),
+          amount: helper.formatMosaicAmountWithDivisibility(receipt.amount, http.networkCurrecy.divisibility),
           mosaicId: receipt.mosaicId.toHex()
         })
         break
@@ -113,7 +113,7 @@ class ReceiptService {
           ...receipt,
           size: receipt.size || Constants.Message.UNAVAILABLE,
           type: Constants.ReceiptType[receipt.type],
-          amount: helper.formatMosaicAmountWithDivisibility(receipt.amount, Constants.NetworkConfig.NATIVE_MOSAIC_DIVISIBILITY),
+          amount: helper.formatMosaicAmountWithDivisibility(receipt.amount, http.networkCurrecy.divisibility),
           mosaicId: receipt.mosaicId.toHex()
         })
         break

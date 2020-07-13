@@ -1,0 +1,39 @@
+{
+    "path": "/nodes",
+    "name": "nodes",
+    "meta": {
+        "group": "list-page",
+        "keepAliveGoTo": ["detail-page"]
+    },
+    "props": {
+        "layout": "flex",
+        "storeNamespaces": ["node"],
+        "schema": [
+            {
+                "layoutOptions": "full-width",
+                "type": "CardTable",
+                "title": "nodesTitle",
+                "managerGetter": "node/timeline",
+                "errorMessage": "Failed to fetch node list",
+                "pagination": "server",
+                "fields": [
+                    "index",
+                    "version",
+                    "roles",
+                    "network",
+                    "host",
+                    "port",
+                    "address",
+                    "friendlyName"
+                ],
+                "mobileFields": [
+                    "index",
+                    "roles",
+                    "address",
+                    "friendlyName",
+                    "host"
+                ]
+            }
+        ]
+    }
+}

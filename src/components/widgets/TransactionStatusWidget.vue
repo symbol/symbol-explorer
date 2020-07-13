@@ -1,7 +1,7 @@
 <template>
     <Card :loading="loading">
         <template #title>
-            {{getNameByKey('Check transaction status')}}
+            {{getNameByKey('checkTransactionStatus')}}
         </template>
 
         <template #body>

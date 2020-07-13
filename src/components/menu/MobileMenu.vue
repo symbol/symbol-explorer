@@ -20,7 +20,7 @@
                     <router-link to="/" class="logo">
                         <img src="../../styles/img/logo-w.png" />
                     </router-link>
-                    <span class="title">{{getNameByKey('blockchain explorer title')}}</span>
+                    <span class="title">{{getNameByKey('blockchainExplorerTitle')}}</span>
                     <LanguageSelector />
                 </div>
                 <div class="drawer-body">

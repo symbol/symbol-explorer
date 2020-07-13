@@ -7,32 +7,32 @@ describe('Symbol Explorer Namespace detail page', () => {
 
     describe('Namespace Detail Card should', () => {
         it('load title', () => {
-            cy.get('[data-cy="Namespace Detail"]').should('contain', 'Namespace Detail')
+            cy.get('[data-cy="namespaceDetailTitle"]').should('contain', 'Namespace Detail')
         })
 
         it('render table in card', ()=> {
-            cy.renderTableInCard("Namespace Detail")
+            cy.renderTableInCard("namespaceDetailTitle")
         })
 
         it('render correct table fields.', () => {
             const items = ['Owner Address', 'Name', 'Namespace ID', 'Registration Type', 'Status', 'Alias Type', 'Alias', 'Registered at Height', 'Expired In Block', 'End at Height']
-            cy.renderFieldInTable("Namespace Detail", items)
+            cy.renderFieldInTable("namespaceDetailTitle", items)
         })
     })
 
     describe('Namespace Level Card should', () => {
         it('load title', () => {
-            cy.get('[data-cy="Namespace Level"]')
+            cy.get('[data-cy="namespaceLevelTitle"]')
             .should('contain', 'Namespace Level')
         })
 
         it('render table in card', ()=> {
-            cy.renderTableInCard("Namespace Level")
+            cy.renderTableInCard("namespaceLevelTitle")
         })
 
         it('render correct table header.', () => {
             const items = ['Name', 'Namespace ID', 'Parent ID']
-            cy.renderHeaderInTable("Namespace Level", items)
+            cy.renderHeaderInTable("namespaceLevelTitle", items)
         })
     })
 

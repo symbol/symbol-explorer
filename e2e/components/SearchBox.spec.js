@@ -1,3 +1,5 @@
+import config from '../config/network.conf.json'
+
 describe('Search Box component should', () => {
     beforeEach(() => {
         cy.visit('/')
@@ -16,7 +18,7 @@ describe('Search Box component should', () => {
     it('redirect to block detail page given existing block number', () => {
 
         cy.get('.search-box')
-        .type('1')
+        .type(config.testBlock.height)
         .type('{enter}')
 
         cy.url()
@@ -25,25 +27,33 @@ describe('Search Box component should', () => {
 
     it('redirect to transaction detail page given correct transaction hash', () => {
 
-        const transactionHash = '2F3CD776DAEEA2E8E3FFE00D7A38DC6EA670E51175A5390CEEEC00B0DB197508'
-
         cy.get('.search-box')
-        .type(transactionHash)
+        .type(config.testTransactions.transferTransactionHash)
         .type('{enter}')
 
         cy.url()
-        .should('contain', `transaction/${transactionHash}`)
+        .should('contain', `transaction/${config.testTransactions.transferTransactionHash}`)
     })
 
-    it('redirect to account detail page given correct account address', () => {
-
-        const address = 'TDTZ23JBJZP3GTKKM2P6FYCMXS6RQYPB6TIMSPVU'
+    it('redirect to account detail page given correct account address in plain format', () => {
 
         cy.get('.search-box')
-        .type(address)
+        .type(config.testAccount.address)
         .type('{enter}')
 
         cy.url()
-        .should('contain', `account/${address}`)
+        .should('contain', `account/${config.testAccount.address}`)
+    })
+
+    it('redirect to account detail page given correct account address in pretty format', () => {
+
+        const prettyAddress = config.testAccount.address.match(/.{1,6}/g).join('-');
+
+        cy.get('.search-box')
+        .type(prettyAddress)
+        .type('{enter}')
+
+        cy.url()
+        .should('contain', `account/${config.testAccount.address}`)
     })
 })

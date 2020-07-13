@@ -1,0 +1,154 @@
+{
+    "path": "/account/:address",
+    "name": "account-detail",
+    "meta": {
+        "group": "detail-page",
+        "keepAliveGoTo": []
+    },
+    "props": {
+        "layout": "flex",
+        "storeNamespaces": [],
+        "initActions": ["account/fetchAccountDetail"],
+        "schema": [
+            {
+                "layoutOptions": "full-width",
+                "type": "CardTable",
+                "title": "accountDetailTitle",
+                "managerGetter": "account/info",
+                "errorMessage": "accountDetailError",
+                "pagination": "none",
+                "fields": [
+                    "address",
+                    "accountAliasName",
+                    "addressHeight",
+                    "publicKey",
+                    "importance",
+                    "type",
+                    "linkedAccountKey"
+                ]
+            },
+            {
+                "layoutOptions": "adaptive",
+                "type": "CardTable",
+                "title": "multisigCosignatoriesTitle",
+                "managerGetter": "account/multisig",
+                "errorMessage": "multisigCosignatoriesError",
+                "pagination": "none",
+                "fields": [
+                    "minApproval",
+                    "minRemoval",
+                    "cosignatories",
+                    "multisigAccounts"
+                ]
+            },
+            {
+                "layoutOptions": "adaptive",
+                "type": "CardTable",
+                "title": "ownedMosaicsTitle",
+                "managerGetter": "account/OwnedMosaic",
+                "pagination": "client",
+                "pageSize": 5,
+                "fields": [
+                    "mosaicId",
+                    "amount",
+                    "mosaicAliasName"
+                ]
+            },
+            {
+                "layoutOptions": "adaptive",
+                "type": "CardTable",
+                "title": "ownedNamespacesTitle",
+                "managerGetter": "account/OwnedNamespace",
+                "pagination": "client",
+                "pageSize": 5,
+                "fields": [
+                    "namespaceName",
+                    "status",
+                    "duration",
+                    "registrationType"
+                ]
+            },
+            {
+                "layoutOptions": "adaptive",
+                "type": "CardTable",
+                "title": "supplementalKeysTitle",
+                "managerGetter": "account/info",
+                "dataGetter": "account/getSupplementalAccountKeys",
+                "pagination": "client",
+                "pageSize": 5,
+                "fields": [
+                    "accountKeyType",
+                    "key"
+                ]
+            },
+            {
+                "layoutOptions": "full-width",
+                "type": "CardTable",
+                "title": "accountTransactionsTitle",
+                "managerGetter": "account/transactions",
+                "pagination": "server",
+                "hasFilter": true,
+                "fields": [
+                    "deadline",
+                    "transactionHash",
+                    "transactionType",
+                    "transactionDescriptor",
+                    "direction"
+                ]
+            },
+            {
+                "layoutOptions": "full-width",
+                "type": "CardTable",
+                "title": "accountPartialTitle",
+                "managerGetter": "account/partialTransactions",
+                "pagination": "server",
+                "fields": [
+                    "signer",
+                    "transactionType",
+                    "transactionHash",
+                    "deadline",
+                    "transactionBody"
+                ]
+            },
+            {
+                "layoutOptions": "full-width",
+                "type": "CardTable",
+                "title": "accountRestrictionTitle",
+                "managerGetter": "account/restrictions",
+                "pagination": "none",
+                "errorMessage": "Account restrictions are not available."
+            },
+            {
+                "layoutOptions": "full-width",
+                "type": "CardTable",
+                "title": "metadataEntriesTitle",
+                "managerGetter": "account/metadatas",
+                "pagination": "client",
+                "pageSize": 5,
+                "fields": [
+                    "metadataId",
+                    "scopedMetadataKey",
+                    "senderAddress",
+                    "targetAddress",
+                    "metadataValue"
+                ]
+            },
+            {
+                "layoutOptions": "full-width",
+                "type": "CardTable",
+                "title": "importanceHistoryTitle",
+                "managerGetter": "account/info",
+                "dataGetter": "account/getActivityBucketList",
+                "pagination": "client",
+                "pageSize": 5,
+                "hideEmptyData": false,
+                "fields": [
+                    "recalculationBlock",
+                    "totalFeesPaid",
+                    "beneficiaryCount",
+                    "importanceScore"
+                ]
+            }
+        ]
+    }
+}

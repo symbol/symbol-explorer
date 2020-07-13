@@ -1,0 +1,67 @@
+{
+    "path": "/namespace/:namespaceId",
+    "name": "namespace-detail",
+    "meta": {
+        "group": "detail-page",
+        "keepAliveGoTo": []
+    },
+    "props": {
+        "layout": "flex",
+        "storeNamespaces": [],
+        "initActions": ["namespace/fetchNamespaceInfo"],
+        "schema": [
+            {
+                "layoutOptions": "full-width",
+                "type": "CardTable",
+                "title": "namespaceDetailTitle",
+                "managerGetter": "namespace/info",
+                "errorMessage": "namespaceDetailError",
+                "pagination": "none",
+                "fields": [
+                    "owneraddress",
+                    "namespaceName",
+                    "namespaceId",
+                    "registrationType",
+                    "status",
+                    "aliasType",
+                    "aliasAddress",
+                    "aliasMosaic",
+                    "startHeight",
+                    "expiredInBlock",
+                    "beforeEndHeight",
+                    "endHeight"
+                ]
+            },
+            {
+                "layoutOptions": "full-width",
+                "type": "CardTable",
+                "title": "namespaceLevelTitle",
+                "managerGetter": "namespace/namespaceLevel",
+                "errorMessage": "namespaceLevelError",
+                "pagination": "none",
+                "fields": [
+                    "name",
+                    "namespaceId",
+                    "parentId"
+                ]
+            },
+            {
+                "layoutOptions": "full-width",
+                "type": "CardTable",
+                "title": "metadataEntriesTitle",
+                "managerGetter": "namespace/metadatas",
+                "errorMessage": "metadataEntriesError",
+                "pagination": "client",
+                "pageSize": 5,
+                "fields": [
+                    "metadataId",
+                    "scopedMetadataKey",
+                    "targetId",
+                    "senderAddress",
+                    "targetAddress",
+                    "metadataValue"
+                ]
+            }
+        ]
+    }
+}

@@ -16,7 +16,6 @@
  *
  */
 
-import Constants from '../config/constants'
 import http from './http'
 
 class NetworkService {
@@ -35,7 +34,6 @@ class NetworkService {
    * @returns transaction fees information
    */
   static getTransactionFees = async () => {
-    // Todo: Remove hardcore URL, After all, restVersion is 1.0.20.24 above
     const transactionFees = await http.createRepositoryFactory.createNetworkRepository()
       .getTransactionFees().toPromise()
     return transactionFees
@@ -64,9 +62,9 @@ class NetworkService {
    * @returns readable RentalfeesDTO object
    */
   static formatRentalFees = rentalFees => ({
-    effectiveRootNamespaceRentalFeePerBlock: rentalFees.effectiveRootNamespaceRentalFeePerBlock / Math.pow(10, Constants.NetworkConfig.NATIVE_MOSAIC_DIVISIBILITY),
-    effectiveChildNamespaceRentalFee: rentalFees.effectiveChildNamespaceRentalFee / Math.pow(10, Constants.NetworkConfig.NATIVE_MOSAIC_DIVISIBILITY),
-    effectiveMosaicRentalFee: rentalFees.effectiveMosaicRentalFee / Math.pow(10, Constants.NetworkConfig.NATIVE_MOSAIC_DIVISIBILITY)
+    effectiveRootNamespaceRentalFeePerBlock: rentalFees.effectiveRootNamespaceRentalFeePerBlock / Math.pow(10, http.networkCurrecy.divisibility),
+    effectiveChildNamespaceRentalFee: rentalFees.effectiveChildNamespaceRentalFee / Math.pow(10, http.networkCurrecy.divisibility),
+    effectiveMosaicRentalFee: rentalFees.effectiveMosaicRentalFee / Math.pow(10, http.networkCurrecy.divisibility)
   })
 }
 

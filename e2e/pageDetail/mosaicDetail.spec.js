@@ -7,16 +7,16 @@ describe('Symbol Explorer Mosaic Detail page', () => {
 
     describe('Mosaic Detail Card should', () => {
         it('load title', () => {
-            cy.get('[data-cy="Mosaic Detail"]').should('contain', 'Mosaic Detail')
+            cy.get('[data-cy="mosaicDetailTitle"]').should('contain', 'Mosaic Detail')
         })
 
         it('render table in card', ()=> {
-            cy.renderTableInCard("Mosaic Detail")
+            cy.renderTableInCard("mosaicDetailTitle")
         })
 
         it('render correct table fields.', () => {
             const items = ['Mosaic ID', 'Alias Namespace', 'Divisibility', 'Address', 'Supply', 'Relative Amount', 'Revision', 'Registered at Height', 'Duration', 'Supply Mutable', 'Transferable', 'Restrictable']
-            cy.renderFieldInTable("Mosaic Detail", items)
+            cy.renderFieldInTable("mosaicDetailTitle", items)
         })
     })
 

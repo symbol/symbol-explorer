@@ -4,7 +4,7 @@
             <img :src="iconUrl" />
         </div>
         <div class="text">
-            {{ text }}
+            {{ transactionText }}
         </div>
     </div>
 </template>
@@ -21,6 +21,7 @@ import IconRestriction from '../../styles/img/tx-restriction.png'
 import IconMultisig from '../../styles/img/tx-multisig.png'
 import IconMetadata from '../../styles/img/tx-metadata.png'
 import IconLink from '../../styles/img/tx-account-link.png'
+import { TransactionType } from 'symbol-sdk'
 
 export default {
   props: {
@@ -48,39 +49,59 @@ export default {
 
   computed: {
     iconUrl() {
-      if (this.isTypeOf('incoming')) return this.IconTransferIncoming
-      if (this.isTypeOf('outgoing')) return this.IconTransferOutgoing
-      if (this.isTypeOf('transfer')) return this.IconTransfer
-      if (this.isTypeOf('namespace')) return this.IconNamespace
-      if (this.isTypeOf('alias')) return this.IconNamespace
-      if (this.isTypeOf('mosaic')) return this.IconMosaic
-      if (this.isTypeOf('aggregate')) return this.IconAggregate
-      if (this.isTypeOf('lock') || this.isTypeOf('secret')) return this.IconLock
-      if (this.isTypeOf('restriction')) return this.IconRestriction
-      if (this.isTypeOf('metadata')) return this.IconMetadata
-      if (this.isTypeOf('multisig')) return this.IconMultisig
-      if (this.isTypeOf('link')) return this.IconLink
-      return null
+      switch (this.extractTransactionType(this.value)) {
+      case TransactionType.TRANSFER:
+        if (this.value.toLowerCase().includes('incoming')) return this.IconTransferIncoming
+        if (this.value.toLowerCase().includes('outgoing')) return this.IconTransferOutgoing
+        return this.IconTransfer
+      case TransactionType.NAMESPACE_REGISTRATION:
+      case TransactionType.ADDRESS_ALIAS:
+      case TransactionType.MOSAIC_ALIAS:
+        return this.IconNamespace
+      case TransactionType.MOSAIC_DEFINITION:
+      case TransactionType.MOSAIC_SUPPLY_CHANGE:
+        return this.IconMosaic
+      case TransactionType.MULTISIG_ACCOUNT_MODIFICATION:
+        return this.IconMultisig
+      case TransactionType.AGGREGATE_COMPLETE:
+      case TransactionType.AGGREGATE_BONDED:
+        return this.IconAggregate
+      case TransactionType.HASH_LOCK:
+      case TransactionType.SECRET_LOCK:
+      case TransactionType.SECRET_PROOF:
+        return this.IconLock
+      case TransactionType.ACCOUNT_KEY_LINK:
+      case TransactionType.VOTING_KEY_LINK:
+      case TransactionType.VRF_KEY_LINK:
+      case TransactionType.NODE_KEY_LINK:
+        return this.IconLink
+      case TransactionType.ACCOUNT_ADDRESS_RESTRICTION:
+      case TransactionType.ACCOUNT_MOSAIC_RESTRICTION:
+      case TransactionType.ACCOUNT_OPERATION_RESTRICTION:
+      case TransactionType.MOSAIC_ADDRESS_RESTRICTION:
+      case TransactionType.MOSAIC_GLOBAL_RESTRICTION:
+        return this.IconRestriction
+      case TransactionType.ACCOUNT_METADATA:
+      case TransactionType.MOSAIC_METADATA:
+      case TransactionType.NAMESPACE_METADATA:
+        return this.IconMetadata
+      default:
+        return null
+      }
     },
 
-    text() {
-      return this.value
-        .replace('Incoming', '')
-        .replace('Outgoing', '')
+    transactionText() {
+      let text = this.value
+        .replace('incoming_', '')
+        .replace('outgoing_', '')
+      return this.$store.getters['ui/getNameByKey'](text)
     }
   },
 
   methods: {
-    isTypeOf(type) {
-      return (
-        typeof this.value === 'string' &&
-                typeof type === 'string' &&
-                this.value
-                  .toUpperCase()
-                  .includes(
-                    type.toUpperCase()
-                  )
-      )
+    extractTransactionType(value) {
+      if (typeof value === 'string')
+        return Number(value.split('_').pop())
     }
   }
 }

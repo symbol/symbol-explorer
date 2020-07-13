@@ -1,0 +1,80 @@
+{
+    "path": "/mosaic/:mosaicId",
+    "name": "mosaic-detail",
+    "meta": {
+        "group": "detail-page",
+        "keepAliveGoTo": []
+    },
+    "props": {
+        "layout": "flex",
+        "storeNamespaces": [],
+        "initActions": ["mosaic/fetchMosaicInfo"],
+        "schema": [
+            {
+                "layoutOptions": "full-width",
+                "type": "CardTable",
+                "title": "mosaicDetailTitle",
+                "managerGetter": "mosaic/info",
+                "errorMessage": "mosaicDetailError",
+                "pagination": "none",
+                "fields": [
+                    "mosaicId",
+                    "mosaicAliasName",
+                    "divisibility",
+                    "address",
+                    "supply",
+                    "relativeAmount",
+                    "revision",
+                    "startHeight",
+                    "duration",
+                    "supplyMutable",
+                    "transferable",
+                    "restrictable"
+                ]
+            },
+            {
+                "layoutOptions": "adaptive",
+                "type": "CardTable",
+                "title": "mosaicRestrictionTitle",
+                "managerGetter": "mosaic/restrictions",
+                "errorMessage": "mosaicRestrictionError",
+                "pagination": "none",
+                "fields": [
+                    "compositeHash",
+                    "entryType"
+                ]
+            },
+            {
+                "layoutOptions": "adaptive",
+                "type": "CardTable",
+                "title": "mosaicRestrictionListTitle",
+                "managerGetter": "mosaic/restrictions",
+                "dataGetter": "mosaic/getMosaicRestrictionList",
+                "errorMessage": "mosaicRestrictionListError",
+                "pagination": "none",
+                "fields": [
+                    "restrictionKey",
+                    "restrictionType",
+                    "restrictionValue"
+                ]
+            },
+            {
+                "layoutOptions": "full-width",
+                "type": "CardTable",
+                "title": "metadataEntriesTitle",
+                "managerGetter": "mosaic/metadatas",
+                "errorMessage": "metadataEntriesError",
+                "pagination": "client",
+                "pageSize": 5,
+                "fields": [
+                    "metadataId",
+                    "scopedMetadataKey",
+                    "targetId",
+                    "senderAddress",
+                    "targetAddress",
+                    "metadataValue"
+                ]
+            }
+        ]
+    }
+}

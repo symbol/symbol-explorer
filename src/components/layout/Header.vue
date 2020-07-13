@@ -11,10 +11,10 @@
                     <b-col md="6" class="header-center">
 
                         <div class="header-title">
-                            {{getNameByKey('blockchain explorer title')}}
+                            {{getNameByKey('blockchainExplorerTitle')}}
                         </div>
                         <div class="header-sub-title">
-                            {{getNameByKey('Search transactions, addresses, namespaces & mosaics on the nem network.')}}
+                            {{getNameByKey('searchBoxTitle')}}
                         </div>
 
                     </b-col>

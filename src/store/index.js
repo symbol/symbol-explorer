@@ -89,18 +89,6 @@ export default new Vuex.Store({
         return helper.logError(dispatch, 'transaction/initialize')
       case 'statistics':
         return helper.logError(dispatch, 'statistic/initialize')
-
-        // Detail Views
-      case 'account-detail':
-        return helper.logError(dispatch, 'account/fetchAccountDetail', route.params.address || 0)
-      case 'block-detail':
-        return helper.logError(dispatch, 'block/fetchBlockInfo', route.params.height || 0)
-      case 'mosaic-detail':
-        return helper.logError(dispatch, 'mosaic/fetchMosaicInfo', route.params.mosaicId || 0)
-      case 'namespace-detail':
-        return helper.logError(dispatch, 'namespace/fetchNamespaceInfo', route.params.namespaceId || 0)
-      case 'transaction-detail':
-        return helper.logError(dispatch, 'transaction/getTransactionInfoByHash', route.params.transactionHash || '')
       }
     },
 

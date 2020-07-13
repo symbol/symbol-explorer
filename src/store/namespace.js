@@ -96,11 +96,18 @@ export default {
     },
 
     // Fetch data from the SDK.
-    fetchNamespaceInfo(context, namespaceOrHex) {
-      context.commit('setCurrentNamespaceId', namespaceOrHex)
-      context.getters.info.setStore(context).initialFetch(namespaceOrHex)
-      context.getters.namespaceLevel.setStore(context).initialFetch(namespaceOrHex)
-      context.getters.metadatas.setStore(context).initialFetch(namespaceOrHex)
+    fetchNamespaceInfo(context, payload) {
+      context.dispatch('uninitializeDetail')
+      context.commit('setCurrentNamespaceId', payload.namespaceId)
+      context.getters.info.setStore(context).initialFetch(payload.namespaceId)
+      context.getters.namespaceLevel.setStore(context).initialFetch(payload.namespaceId)
+      context.getters.metadatas.setStore(context).initialFetch(payload.namespaceId)
+    },
+
+    uninitializeDetail(context) {
+      context.getters.info.setStore(context).uninitialize()
+      context.getters.namespaceLevel.setStore(context).uninitialize()
+      context.getters.metadatas.setStore(context).uninitialize()
     }
   }
 }

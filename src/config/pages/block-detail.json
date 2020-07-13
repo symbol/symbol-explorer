@@ -1,0 +1,105 @@
+{
+    "path": "/block/:height",
+    "name": "block-detail",
+    "meta": {
+        "group": "detail-page",
+        "keepAliveGoTo": []
+    },
+    "props": {
+        "layout": "flex",
+        "storeNamespaces": ["block"],
+        "initActions": ["block/fetchBlockInfo"],
+        "schema": [
+            {
+                "layoutOptions": "full-width",
+                "type": "CardTable",
+                "title": "blockDetailTitle",
+                "managerGetter": "block/info",
+                "errorMessage": "blockDetailError",
+                "pagination": "custom",
+                "paginationOptions": {
+                    "nextPageAction": "block/nextBlock",
+                    "previousPageAction": "block/previousBlock",
+                    "canFetchPrevious": true,
+                    "canFetchNext": true
+                },
+                "fields": [
+                    "height",
+                    "date",
+                    "totalFee",
+                    "difficulty",
+                    "feeMultiplier",
+                    "transactions",
+                    "harvester",
+                    "blockHash",
+                    "proofGamma",
+                    "proofScalar",
+                    "proofVarificationHash"
+                ]
+            },
+            {
+                "layoutOptions": "full-width",
+                "type": "CardTable",
+                "title": "blockTransactionsTitle",
+                "managerGetter": "block/blockTransactions",
+                "pagination": "server",
+                "fields": [
+                    "deadline",
+                    "transactionId",
+                    "transactionHash",
+                    "type"
+                ]
+            },
+            {
+                "layoutOptions": "adaptive",
+                "type": "CardTable",
+                "title": "balanceChangeReceiptTitle",
+                "managerGetter": "block/blockReceipts",
+                "dataGetter": "block/balanceChangeReceipt",
+                "pagination": "client",
+                "pageSize": 5,
+                "hideEmptyData": true
+            },
+            {
+                "layoutOptions": "adaptive",
+                "type": "CardTable",
+                "title": "balanceTransferReceiptTitle",
+                "managerGetter": "block/blockReceipts",
+                "dataGetter": "block/balanceTransferReceipt",
+                "pagination": "client",
+                "pageSize": 5,
+                "hideEmptyData": true
+            },
+            {
+                "layoutOptions": "adaptive",
+                "type": "CardTable",
+                "title": "inflationReceiptTitle",
+                "managerGetter": "block/blockReceipts",
+                "dataGetter": "block/inflationReceipt",
+                "pagination": "client",
+                "pageSize": 5,
+                "hideEmptyData": true
+            },
+            {
+                "layoutOptions": "adaptive",
+                "type": "CardTable",
+                "title": "artifactExpiryReceiptTitle",
+                "managerGetter": "block/blockReceipts",
+                "dataGetter": "block/artifactExpiryReceipt",
+                "pagination": "client",
+                "pageSize": 5,
+                "hideEmptyData": true
+            },
+            {
+                "layoutOptions": "adaptive",
+                "type": "CardTable",
+                "title": "resolutionStatementTitle",
+                "managerGetter": "block/blockReceipts",
+                "dataGetter": "block/resolutionStatement",
+                "pagination": "client",
+                "pageSize": 5,
+                "hideEmptyData": true
+            }
+        ]
+    }
+}

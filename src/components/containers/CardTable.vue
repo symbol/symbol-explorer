@@ -1,25 +1,18 @@
 <template>
-    <Card
-        class="card-f card-full-width"
-        :loading="loading"
-        :error="error"
-    >
-        <template #title>
-            {{getNameByKey(title)}}
-        </template>
+    <Card class="card-f card-full-width" :loading="loading" :error="error">
+        <template #title>{{getNameByKey(title)}}</template>
         <template #control>
-            <div class="ex-infotext" v-if="hasInfoText"> {{infoText}} </div>
-            <Dropdown
+            <div class="ex-infotext" v-if="hasInfoText">{{infoText}}</div>
+            <component
                 v-if="hasFilter"
+                :is="filterDropdownComponentName"
                 :options="filterOptions"
                 :value="filterValue"
+                :index="filterIndex"
                 right
                 @change="changeFilterValue"
             />
-            <Pagination
-                v-else-if="pagination === 'custom'"
-                v-bind="paginationOptions"
-            />
+            <Pagination v-else-if="pagination === 'custom'" v-bind="paginationOptions" />
         </template>
         <template #body>
             <TableListView
@@ -30,18 +23,11 @@
                 :pagination="pagination === 'client'"
                 :pageSize="pageSize"
             />
-            <TableInfoView
-                v-else-if="typeof data === 'object'"
-                :data="data"
-            />
-            <div v-else>
-                {{getNameByKey('No data provided')}}
-            </div>
+            <TableInfoView v-else-if="typeof data === 'object'" :data="data" />
+            <div v-else>{{getNameByKey('No data provided')}}</div>
         </template>
 
-        <template #error>
-            {{getNameByKey(errorMessage)}}
-        </template>
+        <template #error>{{getNameByKey(errorMessage)}}</template>
     </Card>
 </template>
 
@@ -49,6 +35,7 @@
 import Card from '@/components/containers/Card.vue'
 import TableListView from '@/components/tables/TableListView.vue'
 import TableInfoView from '@/components/tables/TableInfoView.vue'
+import DropdownFilter from '@/components/controls/DropdownFilter.vue'
 import Dropdown from '@/components/controls/Dropdown.vue'
 import Pagination from '@/components/controls/Pagination.vue'
 
@@ -57,6 +44,7 @@ export default {
     Card,
     TableListView,
     TableInfoView,
+    DropdownFilter,
     Dropdown,
     Pagination
   },
@@ -125,10 +113,33 @@ export default {
     data() {
       const data = this.getter(this.dataGetter) || this.manager.data
 
-      if (typeof data === 'undefined')
-        throw Error('ListPage error. Manager or Data getter is not provided')
+      if (typeof data === 'undefined') {
+        throw Error(
+          'ListPage error. Manager or Data getter is not provided'
+        )
+      }
 
-      if (Array.isArray(data) && this.$store.getters['ui/isMobile'] && Array.isArray(this.mobileFields)) {
+      if (
+        !Array.isArray(data) &&
+                data !== null &&
+                typeof data === 'object'
+      ) {
+        let fields = null
+        if (this.$store.getters['ui/isMobile'])
+          fields = this.mobileFields
+        else fields = this.fields
+        if (Array.isArray(fields) && fields.length) {
+          return Object.fromEntries(
+            fields.map(field => [field, data[field]])
+          )
+        }
+      }
+
+      if (
+        Array.isArray(data) &&
+                this.$store.getters['ui/isMobile'] &&
+                Array.isArray(this.mobileFields)
+      ) {
         return data.map(row => {
           let mobileRow = {}
 
@@ -139,8 +150,7 @@ export default {
 
           return mobileRow
         })
-      } else
-      if (Array.isArray(data) && Array.isArray(this.fields)) {
+      } else if (Array.isArray(data) && Array.isArray(this.fields)) {
         return data.map(row => {
           let columnRow = {}
 
@@ -151,8 +161,7 @@ export default {
 
           return columnRow
         })
-      } else
-        return data
+      } else return data
     },
 
     loading() {
@@ -173,8 +182,18 @@ export default {
       return this.manager.filterValue
     },
 
+    filterIndex() {
+      return this.manager.filterIndex
+    },
+
     filterOptions() {
       return this.manager.filterOptions
+    },
+
+    filterDropdownComponentName() {
+      return Array.isArray(this.filterOptions)
+        ? 'DropdownFilter'
+        : 'Dropdown'
     }
   },
 
@@ -186,8 +205,11 @@ export default {
     changeFilterValue(e) {
       if (typeof this.manager.changeFilterValue === 'function')
         this.manager.changeFilterValue(e)
-      else
-        console.error('Failed to change filter value. "changeFilterValue" is not a function')
+      else {
+        console.error(
+          'Failed to change filter value. "changeFilterValue" is not a function'
+        )
+      }
     },
 
     getter(name) {

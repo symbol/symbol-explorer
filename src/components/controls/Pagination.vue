@@ -10,8 +10,8 @@
         </b-button>
       </b-button-group>
     </div>
-    <ButtonMore v-else-if="!canFetchPrevious" @click="nextPage">{{getNameByKey('More')}}</ButtonMore>
-    <ButtonLess v-else-if="!canFetchNext" @click="previousPage">{{getNameByKey('Less')}}</ButtonLess>
+    <ButtonMore v-else-if="!canFetchPrevious" @click="nextPage">{{getNameByKey('more')}}</ButtonMore>
+    <ButtonLess v-else-if="!canFetchNext" @click="previousPage">{{getNameByKey('less')}}</ButtonLess>
     <div v-else :nextPageAction="nextPageAction" :previousPageAction="previousPageAction">
       <b-button-group>
         <b-button variant="outline-info" size="sm" @click="previousPage">

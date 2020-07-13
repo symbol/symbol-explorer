@@ -7,21 +7,21 @@ describe('Symbol Explorer Transaction detail page for Transfer Transaction', () 
 
     describe('Transaction info card should', () => {
         it('load title', () => {
-            cy.get('[data-cy="Transaction Info"]').should('contain', 'Transaction Info')
+            cy.get('[data-cy="transactionInfoTitle"]').should('contain', 'Transaction Info')
         })
 
         it('render data info in table', ()=> {
-            cy.get('[data-cy="Transaction Info"] table')
+            cy.get('[data-cy="transactionInfoTitle"] table')
             .should('be.visible')
 
-            cy.get('[data-cy="Transaction Info"] tbody > tr')
+            cy.get('[data-cy="transactionInfoTitle"] tbody > tr')
             .then($data => {
                 return $data.length
             }).should('be.at.least',1)
         })
 
         it('render correct transaction info titles', ()=> {
-            cy.get('[data-cy="Transaction Info"] .table-titles').as('infoTitle')
+            cy.get('[data-cy="transactionInfoTitle"] .table-titles').as('infoTitle')
 
             cy.get('@infoTitle').should('have.length', 10)
             cy.get('@infoTitle').should('contain', 'Block Height')
@@ -39,21 +39,21 @@ describe('Symbol Explorer Transaction detail page for Transfer Transaction', () 
 
     describe('Transaction Detail card should', () => {
         it('load title', () => {
-            cy.get('[data-cy="Transaction Detail"]').should('contain', 'Transaction Detail')
+            cy.get('[data-cy="transactionDetailTitle"]').should('contain', 'Transaction Detail')
         })
 
         it('render data info in table', ()=> {
-            cy.get('[data-cy="Transaction Detail"] table')
+            cy.get('[data-cy="transactionDetailTitle"] table')
             .should('be.visible')
 
-            cy.get('[data-cy="Transaction Detail"] tbody > tr')
+            cy.get('[data-cy="transactionDetailTitle"] tbody > tr')
             .then($data => {
                 return $data.length
             }).should('be.at.least',1)
         })
 
         it('render correct transaction detail titles', () => {
-            cy.get('[data-cy="Transaction Detail"] .table-titles').as('infoTitle')
+            cy.get('[data-cy="transactionDetailTitle"] .table-titles').as('infoTitle')
 
             cy.get('@infoTitle').should('have.length', 3)
             cy.get('@infoTitle').should('contain', 'Type')
@@ -65,24 +65,24 @@ describe('Symbol Explorer Transaction detail page for Transfer Transaction', () 
 
     describe('Mosaics card should', () => {
         it('load title', () => {
-            cy.get('[data-cy="Mosaics"]').should('contain', 'Mosaics')
+            cy.get('[data-cy="mosaicsTitle"]').should('contain', 'Mosaics')
         })
 
         it('render data list in table', () => {
-            cy.get('[data-cy="Mosaics"] table')
+            cy.get('[data-cy="mosaicsTitle"] table')
             .should('be.visible')
 
-            cy.get('[data-cy="Mosaics"] thead > tr > th')
+            cy.get('[data-cy="mosaicsTitle"] thead > tr > th')
             .should('have.length', 3)
 
-            cy.get('[data-cy="Mosaics"] tbody > tr')
+            cy.get('[data-cy="mosaicsTitle"] tbody > tr')
             .then($data => {
                 return $data.length
             }).should('be.at.least',1)
         })
 
         it('render correct table header.', () => {
-            cy.get('[data-cy="Mosaics"] thead > tr > th').as('tableHeader')
+            cy.get('[data-cy="mosaicsTitle"] thead > tr > th').as('tableHeader')
 
             cy.get('@tableHeader').should('contain', 'Mosaic ID')
             cy.get('@tableHeader').should('contain', 'Amount')

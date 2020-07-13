@@ -17,19 +17,55 @@
  */
 
 import * as symbol from 'symbol-sdk'
-import constants from '../config/constants'
+import { MosaicService } from '../infrastructure'
 
 let NODE_URL
 let MARKET_DATA_URL
 let NETWORK_TYPE
 let GENERATION_HASH
+let NETWORK_PROPERTIES
+let NETWORK_CURRECY
 
 export default class http {
   static init = async (nodeUrl, marketDataUrl) => {
     NODE_URL = nodeUrl
     MARKET_DATA_URL = marketDataUrl
-    NETWORK_TYPE = await http.createRepositoryFactory.getNetworkType().toPromise() || constants.NetworkConfig.NETWORKTYPE
+    NETWORK_TYPE = await http.createRepositoryFactory.getNetworkType().toPromise()
     GENERATION_HASH = await http.createRepositoryFactory.getGenerationHash().toPromise()
+    NETWORK_PROPERTIES = await http.createRepositoryFactory.createNetworkRepository().getNetworkProperties().toPromise()
+
+    const mosaicId = NETWORK_PROPERTIES.chain.currencyMosaicId.replace(/0x|'/g, '')
+    NETWORK_CURRECY = await MosaicService.getMosaicInfo(mosaicId)
+  }
+
+  static get networkCurrecy() {
+    const splitNamespace = NETWORK_CURRECY.mosaicAliasName.toUpperCase().split('.')
+    return {
+      namespace: [...splitNamespace, NETWORK_CURRECY.mosaicAliasName.toUpperCase()],
+      mosaicId: NETWORK_CURRECY.mosaicId,
+      divisibility: NETWORK_CURRECY.divisibility
+    }
+  }
+
+  static get networkProperties() {
+    return new symbol.NetworkConfiguration(NETWORK_PROPERTIES.network, NETWORK_PROPERTIES.chain, NETWORK_PROPERTIES.plugins)
+  }
+
+  static get networkConfig() {
+    const convertedTotalChainImportance = +this.networkProperties.chain.totalChainImportance.replace(/'/g, '')
+    const convertedNamespaceGracePeriodDuration = +this.networkProperties.plugins.namespace.namespaceGracePeriodDuration.replace(/d/g, '')
+    const convertedBlockGenerationTargetTime = +this.networkProperties.chain.blockGenerationTargetTime.replace(/s/g, '')
+    const blockPerday = (60 / convertedBlockGenerationTargetTime) * 60 * 24
+
+    return {
+      MosaicRentalSinkPublicKey: this.networkProperties.plugins.mosaic.mosaicRentalFeeSinkPublicKey,
+      NamespaceRentalSinkPublicKey: this.networkProperties.plugins.namespace.namespaceRentalFeeSinkPublicKey,
+      NetworkType: this.networkType,
+      NemsisTimestamp: symbol.Deadline.timestampNemesisBlock,
+      TargetBlockTime: convertedBlockGenerationTargetTime,
+      NamespaceGraceDuration: convertedNamespaceGracePeriodDuration * blockPerday,
+      TotalChainImportance: convertedTotalChainImportance
+    }
   }
 
   static get marketDataUrl() {

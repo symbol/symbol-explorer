@@ -96,6 +96,18 @@ class NamespaceService {
   }
 
   /**
+   * Get linked address from namespace Id
+   * @param namespaceId - Namespace id
+   * @returns plan address - example : SB3KUBHATFCPV7UZQLWAQ2EUR6SIHBSBEOEDDDF3
+   */
+  static getLinkedAddress = async (namespaceId) => {
+    const address = await http.createRepositoryFactory.createNamespaceRepository()
+      .getLinkedAddress(namespaceId).toPromise()
+
+    return address.plain()
+  }
+
+  /**
    * Get namespace info for Vue Component
    * @param hexOrNamespace - hex value or namespace name
    * @returns customize namespace info Object
@@ -125,10 +137,10 @@ class NamespaceService {
       formattedNamespaceInfo.aliasMosaic = namespace.alias
 
     // End height disable click before expired.
-    formattedNamespaceInfo.expiredInBlock = Constants.NetworkConfig.NAMESPACE.indexOf(namespace.namespaceName.toUpperCase()) !== -1 ? Constants.Message.INFINITY : expiredInBlock + ` ≈ ` + formattedNamespaceInfo.duration
+    formattedNamespaceInfo.expiredInBlock = http.networkCurrecy.namespace.indexOf(namespace.namespaceName.toUpperCase()) !== -1 ? Constants.Message.INFINITY : expiredInBlock + ` ≈ ` + formattedNamespaceInfo.duration
 
     if (!isExpired) {
-      formattedNamespaceInfo.beforeEndHeight = Constants.NetworkConfig.NAMESPACE.indexOf(namespace.namespaceName.toUpperCase()) !== -1 ? Constants.Message.INFINITY : formattedNamespaceInfo.endHeight + ` ( ${Constants.NetworkConfig.NAMESPACE_GRACE_PERIOD_DURATION} blocks of grace period )`
+      formattedNamespaceInfo.beforeEndHeight = http.networkCurrecy.namespace.indexOf(namespace.namespaceName.toUpperCase()) !== -1 ? Constants.Message.INFINITY : formattedNamespaceInfo.endHeight + ` ( ${http.networkConfig.NamespaceGraceDuration} blocks of grace period )`
       delete formattedNamespaceInfo.endHeight
     }
 
@@ -264,7 +276,7 @@ class NamespaceService {
     namespaceId: namespace.id.toHex(),
     registrationType: Constants.NamespaceRegistrationType[namespace.registrationType],
     startHeight: namespace.startHeight.compact(),
-    endHeight: Constants.NetworkConfig.NAMESPACE.indexOf(namespace.name.toUpperCase()) !== -1
+    endHeight: http.networkCurrecy.namespace.indexOf(namespace.name.toUpperCase()) !== -1
       ? Constants.Message.INFINITY
       : namespace.endHeight.compact(),
     active: namespace.active ? Constants.Message.ACTIVE : Constants.Message.INACTIVE,

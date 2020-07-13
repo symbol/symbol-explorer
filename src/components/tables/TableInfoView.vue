@@ -14,6 +14,7 @@
                         <ArrayField v-if="isArrayField(itemKey)" :itemKey="itemKey" :value="item" />
                         <MosaicsField v-else-if="itemKey === 'mosaics'" :value="item" />
                         <Decimal v-else-if="isDecimal(itemKey)" :value="item" />
+                        <TransactionType v-else-if="isTransactionType(itemKey)" :value="item" />
                         <router-link
                             v-else-if="isKeyClickable(itemKey) && getItemHref(itemKey, item)"
                             :to="getItemHref(itemKey, item)"
@@ -29,15 +30,17 @@
 
 <script>
 import TableView from './TableView.vue'
-import MosaicsField from '../fields/MosaicsField.vue'
-import ArrayField from '../fields/ArrayField.vue'
+import MosaicsField from '@/components/fields/MosaicsField.vue'
+import ArrayField from '@/components/fields/ArrayField.vue'
+import TransactionType from '@/components/fields/TransactionType.vue'
 
 export default {
   extends: TableView,
 
   components: {
     MosaicsField,
-    ArrayField
+    ArrayField,
+    TransactionType
   },
 
   props: {

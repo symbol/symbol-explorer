@@ -76,7 +76,7 @@ export default class Timeline {
     this.next = []
     this.index = 0
     this.keys = []
-    this.loading = false
+    this.loading = true
     this.error = false
   }
 

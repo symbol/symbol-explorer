@@ -1,0 +1,97 @@
+{
+    "path": "/transaction/:transactionHash",
+    "name": "transaction-detail",
+    "meta": {
+        "group": "detail-page",
+        "keepAliveGoTo": []
+    },
+    "props": {
+        "layout": "flex",
+        "storeNamespaces": [],
+        "initActions": ["transaction/getTransactionInfoByHash"],
+        "schema": [
+            {
+                "layoutOptions": "full-width",
+                "type": "TransactionSchema",
+                "managerGetter": "transaction/transactionSchema"
+            },
+            {
+                "layoutOptions": "full-width",
+                "type": "CardTable",
+                "title": "transactionInfoTitle",
+                "managerGetter": "transaction/info",
+                "errorMessage": "transactionInfoError",
+                "pagination": "none",
+                "fields": [
+                    "blockHeight",
+                    "transactionHash",
+                    "transactionId",
+                    "date",
+                    "deadline",
+                    "effectiveFee",
+                    "signature",
+                    "signer",
+                    "status",
+                    "confirm"
+                ]
+            },
+            {
+                "layoutOptions": "adaptive",
+                "type": "CardTable",
+                "title": "transactionDetailTitle",
+                "managerGetter": "transaction/info",
+                "dataGetter": "transaction/transactionDetail",
+                "errorMessage": "transactionDetailError",
+                "pagination": "none"
+            },
+            {
+                "layoutOptions": "adaptive",
+                "type": "CardTable",
+                "title": "mosaicsTitle",
+                "managerGetter": "transaction/info",
+                "dataGetter": "transaction/transferMosaics",
+                "errorMessage": "transactionMosaicsError",
+                "pagination": "client",
+                "pageSize": 5,
+                "hideEmptyData": true,
+                "fields": [
+                    "mosaicId",
+                    "amount",
+                    "mosaicAliasName"
+                ]
+            },
+            {
+                "layoutOptions": "full-width",
+                "type": "CardTable",
+                "title": "aggregateInnerTransactionsTitle",
+                "managerGetter": "transaction/info",
+                "dataGetter": "transaction/aggregateInnerTransactions",
+                "errorMessage": "aggregateInnerTransactionsError",
+                "pagination": "client",
+                "pageSize": 5,
+                "hideEmptyData": true,
+                "fields": [
+                    "transactionId",
+                    "type",
+                    "signer",
+                    "transactionBody"
+                ]
+            },
+            {
+                "layoutOptions": "full-width",
+                "type": "CardTable",
+                "title": "aggregateCosignaturesTitle",
+                "managerGetter": "transaction/info",
+                "dataGetter": "transaction/aggregateCosignatures",
+                "errorMessage": "aggregateCosignaturesError",
+                "pagination": "client",
+                "pageSize": 5,
+                "hideEmptyData": true,
+                "fields": [
+                    "signature",
+                    "signer"
+                ]
+            }
+        ]
+    }
+}

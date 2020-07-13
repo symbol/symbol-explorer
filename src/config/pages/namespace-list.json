@@ -1,0 +1,34 @@
+{
+    "path": "/namespaces",
+    "name": "namespaces",
+    "meta": {
+        "group": "list-page",
+        "keepAliveGoTo": ["detail-page"]
+    },
+    "props": {
+        "layout": "flex",
+        "storeNamespaces": ["namespace"],
+        "schema": [
+            {
+                "layoutOptions": "full-width",
+                "type": "CardTable",
+                "title": "namespacesTitle",
+                "managerGetter": "namespace/timeline",
+                "errorMessage": "Failed to fetch namespace list",
+                "pagination": "server",
+                "fields": [
+                    "namespaceName",
+                    "namespaceId",
+                    "owneraddress",
+                    "expirationDuration",
+                    "approximateExpired"
+                ],
+                "mobileFields": [
+                    "namespaceName",
+                    "owneraddress",
+                    "duration"
+                ]
+            }
+        ]
+    }
+}

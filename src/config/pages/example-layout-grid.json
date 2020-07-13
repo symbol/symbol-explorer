@@ -1,0 +1,32 @@
+{
+    "path": "/grid",
+    "name": "grid",
+    "meta": {
+        "group": "detail-page",
+        "keepAliveGoTo": []
+    },
+    "props": {
+        "layout": "grid",
+        "storeNamespaces": ["account", "chain", "block", "transaction"],
+        "schema": [
+            {
+                "layoutOptions": "grid-column: 2 / 3; grid-row: 1 / 2;",
+                "type": "BaseInfoWidget"
+            },
+            {
+                "layoutOptions": "grid-column: 1 / 2; grid-row: 1 / 3;",
+                "type": "CardTable",
+                "title": "Transactions",
+                "managerGetter": "transaction/timeline",
+                "errorMessage": "No data",
+                "pagination": "client",
+                "pageSize": 5,
+                "hasFilter": true
+            },
+            {
+                "layoutOptions": "grid-column: 2 / 3; grid-row: 2 / 3;",
+                "type": "RecentBlocksWidget"
+            }
+        ]
+    }
+}

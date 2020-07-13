@@ -93,7 +93,18 @@ export default {
     transactionDetail: state => state.info?.data?.transactionBody || {},
     transferMosaics: state => state.info?.data?.transferMosaics || [],
     aggregateInnerTransactions: state => state.info?.data?.aggregateTransaction?.innerTransactions || [],
-    aggregateCosignatures: state => state.info?.data?.aggregateTransaction?.cosignatures || []
+    aggregateCosignatures: state => state.info?.data?.aggregateTransaction?.cosignatures || [],
+    transactionSchema: (state, getters) => ({
+      loading: getters.info.loading,
+      error: getters.info.error,
+      data: {
+        type: getters.info.data.type,
+        signer: getters.info.data.signer,
+        recipient: getters.transactionDetail.recipient,
+        message: getters.transactionDetail.message,
+        mosaics: getters.transferMosaics
+      }
+    })
   },
   mutations: {
     ...getMutationsFromManagers(managers),
@@ -153,8 +164,13 @@ export default {
       context.getters.timeline.setStore(context).initialFetch()
     },
 
-    getTransactionInfoByHash(context, hash) {
-      context.getters.info.setStore(context).initialFetch(hash)
+    getTransactionInfoByHash(context, payload) {
+      context.dispatch('uninitializeDetail')
+      context.getters.info.setStore(context).initialFetch(payload.transactionHash)
+    },
+
+    uninitializeDetail(context) {
+      context.getters.info.setStore(context).uninitialize()
     }
   }
 }

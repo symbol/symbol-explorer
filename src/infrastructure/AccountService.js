@@ -16,7 +16,7 @@
  *
  */
 
-import { Address, QueryParams } from 'symbol-sdk'
+import { Address, QueryParams, TransactionType } from 'symbol-sdk'
 import http from './http'
 import { Constants } from '../config'
 import { DataService, NamespaceService, TransactionService } from '../infrastructure'
@@ -138,13 +138,13 @@ class AccountService {
       ...accountTransaction,
       transactionId: accountTransaction.id,
       transactionHash: accountTransaction.hash,
-      transactionType:
-        accountTransaction.transactionBody.type === 'Transfer'
+      transactionDescriptor:
+        accountTransaction.transactionBody.type === TransactionType.TRANSFER
           ? (accountTransaction.signer === address
-            ? 'TransferOutgoing'
-            : 'TransferIncoming'
+            ? 'outgoing_' + accountTransaction.transactionBody.transactionDescriptor
+            : 'incoming_' + accountTransaction.transactionBody.transactionDescriptor
           )
-          : accountTransaction.transactionBody.type
+          : accountTransaction.transactionBody.transactionDescriptor
     }))
   }
 
@@ -176,7 +176,6 @@ class AccountService {
     addressHeight: accountInfo.addressHeight.compact(),
     publicKeyHeight: accountInfo.publicKeyHeight.compact(),
     type: Constants.AccountType[accountInfo.accountType],
-    linkedAccountKey: Constants.AccountType[accountInfo.accountType] === 'Unlinked' ? Constants.Message.UNAVAILABLE : Address.createFromPublicKey(accountInfo.linkedAccountKey, http.networkType).plain(),
     supplementalAccountKeys: accountInfo.supplementalAccountKeys.map(accountKey => ({
       ...accountKey,
       accountKeyType: Constants.AccountKeyType[accountKey.keyType]

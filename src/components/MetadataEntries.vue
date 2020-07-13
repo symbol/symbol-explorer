@@ -40,7 +40,7 @@ export default {
 
   data() {
     return {
-      metadataEntries: 'Metadata Entries'
+      metadataEntries: 'metadataEntriesTitle'
     }
   },
 

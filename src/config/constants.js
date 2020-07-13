@@ -12,7 +12,6 @@ import {
   ReceiptType,
   ResolutionType,
   RoleType,
-  Deadline,
   AddressRestrictionFlag,
   MosaicRestrictionFlag,
   OperationRestrictionFlag,
@@ -32,19 +31,6 @@ class Constants {
     NO_ALIAS: 'NO ALIAS',
     ACTIVE: 'ACTIVE',
     INACTIVE: 'INACTIVE'
-  }
-
-  static NetworkConfig = {
-    MOSAIC_RENTAL_FEE_SINK_PUBLIC_KEY: globalConfig.networkConfig.MosaicRentalSinkPublicKey,
-    NAMESPACE_RENTAL_FEE_SINK_PUBLIC_KEY: globalConfig.networkConfig.NamespaceRentalSinkPublicKey,
-    NAMESPACE: globalConfig.networkConfig.Namespace,
-    NATIVE_MOSAIC_HEX: globalConfig.networkConfig.NativeMosaicHex,
-    NATIVE_MOSAIC_DIVISIBILITY: globalConfig.networkConfig.NativeMosaicDivisibility,
-    NETWORKTYPE: NetworkType[globalConfig.networkConfig.NetworkType],
-    NEMESIS_TIMESTAMP: Deadline.timestampNemesisBlock,
-    TARGET_BLOCK_TIME: globalConfig.networkConfig.TargetBlockTime,
-    NAMESPACE_GRACE_PERIOD_DURATION: globalConfig.networkConfig.NamespaceGraceDuration,
-    TOTAL_CHAIN_IMPORTANCE: globalConfig.networkConfig.TotalChainImportance
   }
 
   static TransactionType = {
@@ -80,7 +66,7 @@ class Constants {
   }
 
   static NamespaceRegistrationType = {
-    [NamespaceRegistrationType.RootNamespace]: 'Root Namespace',
+    [NamespaceRegistrationType.RootNamespace]: 'rootNamespace',
     [NamespaceRegistrationType.SubNamespace]: 'Sub Namespace'
   }
 

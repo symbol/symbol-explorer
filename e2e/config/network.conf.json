@@ -3,7 +3,7 @@
         "address": "TATGZXFW3OTHPZT4G4IVDD2K7PXIJJXGEVCKP72W"
     },
     "testMosaic": {
-        "mosaicId": "519FC24B9223E0B4"
+        "mosaicId": "05D6A80DE3C9ADCA"
     },
     "testNamespace": {
         "rootNamespace": "symbol",
@@ -13,6 +13,6 @@
         "height": "1"
     },
     "testTransactions":{
-        "transferTransactionHash": "C838773F36EB3F5C5433A9F96A5AC44D2886D1F6467D8FE2F420A2118C3000D8"
+        "transferTransactionHash": "12D43269B57DBE93213448CD632DDF8313A06905EC55C2E24B6138A51B65CC70"
     }
 }

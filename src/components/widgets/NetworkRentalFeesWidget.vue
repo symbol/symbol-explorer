@@ -1,7 +1,7 @@
 <template>
     <Card :loading="loading">
         <template #title>
-            {{getNameByKey('Network Rental Fees')}}
+            {{getNameByKey('networkRentalFees')}}
         </template>
 
         <template #body>

@@ -7,6 +7,6 @@ export default {
     { to: '/namespaces', text: 'namespaces', icon: 'IconNamespaces' },
     { to: '/mosaics', text: 'mosaics', icon: 'IconMosaics' },
     { to: '/nodes', text: 'nodes', icon: 'IconNodes' },
-    { to: '/statistics', text: 'Statistics', icon: 'IconStatistics' }
+    { to: '/statistics', text: 'statistics', icon: 'IconStatistics' }
   ]
 }
