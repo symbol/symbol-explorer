@@ -1,4 +1,5 @@
 import config from '../../config/network.conf.json'
+import datafiled from '../../config/datafiled.json'
 
 describe('Symbol Explorer Transaction detail page for Mosaic Supply Change', () => {
     beforeEach(() => {
@@ -15,7 +16,7 @@ describe('Symbol Explorer Transaction detail page for Mosaic Supply Change', () 
         })
 
         it('render correct transaction info titles', ()=> {
-            const items = ['Block Height', 'Transaction Hash', 'Transaction ID', 'Date', 'Deadline', 'Fee', 'Signature', 'Signer', 'Status', 'Confirmation']
+            const items = datafiled.transactionInfoFields
             cy.renderFieldInTable("transactionInfoTitle", items)
         })
     })
@@ -30,7 +31,7 @@ describe('Symbol Explorer Transaction detail page for Mosaic Supply Change', () 
         })
 
         it('render correct transaction detail titles', () => {
-            const items = ['Type', 'Type', 'Mosaic ID', 'Action', 'Delta']
+            const items = ['Type', 'Mosaic ID', 'Action', 'Delta']
             cy.renderFieldInTable("transactionDetailTitle", items)
         })
 

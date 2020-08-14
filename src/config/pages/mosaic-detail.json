@@ -64,8 +64,8 @@
                 "title": "metadataEntriesTitle",
                 "managerGetter": "mosaic/metadatas",
                 "errorMessage": "metadataEntriesError",
-                "pagination": "client",
-                "pageSize": 5,
+                "pagination": "server",
+                "hasFilter": true,
                 "fields": [
                     "metadataId",
                     "scopedMetadataKey",

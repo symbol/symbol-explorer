@@ -1,22 +1,22 @@
 <template>
-    <b-button
-        exact
-        active-class="active"
-        class="btn-green noselect pointer"
-        @click="$emit('click')"
-    >
-        <ArrowLeft class="more-icon" />
-        <span><slot/></span>
-    </b-button>
+	<b-button
+		exact
+		active-class="active"
+		class="btn-green noselect pointer"
+		@click="$emit('click')"
+	>
+		<ArrowLeft class="more-icon" />
+		<span><slot/></span>
+	</b-button>
 </template>
 
 <script>
-import ArrowLeft from 'vue-material-design-icons/ArrowLeft.vue'
+import ArrowLeft from 'vue-material-design-icons/ArrowLeft.vue';
 export default {
-  components: {
-    ArrowLeft
-  }
-}
+	components: {
+		ArrowLeft
+	}
+};
 </script>
 
 <style lang="scss" scoped>

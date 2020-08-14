@@ -1,45 +1,48 @@
 <template>
-    <Dropdown
-      :options="options"
-      :dark="true"
-      right
-      :value="currentNode"
-      class="node-selector"
-      @change="setNode"
-    />
+	<Dropdown
+		:options="options"
+		:dark="true"
+		right
+		:value="currentNode"
+		class="node-selector"
+		@change="setNode"
+	/>
 </template>
 
 <script>
-import Dropdown from './Dropdown.vue'
+import Dropdown from './Dropdown.vue';
 export default {
-  components: {
-    Dropdown
-  },
+	components: {
+		Dropdown
+	},
 
-  computed: {
-    nodeList() {
-      return this.$store.getters['api/nodes'] || []
-    },
+	computed: {
+		nodeList() {
+			return this.$store.getters['api/nodes'] || [];
+		},
 
-    options() {
-      let options = {}
-      this.nodeList.forEach(node => { options[node.toString()] = node.hostname }
-      )
-      return options
-    },
+		options() {
+			let options = {};
 
-    currentNode() {
-      return 'Node: ' + this.$store.getters['api/currentNodeHostname']
-    }
-  },
+			this.nodeList.forEach(node => {
+				options[node.toString()] = node.hostname;
+			}
+			);
+			return options;
+		},
 
-  methods: {
-    async setNode(url) {
-      this.$emit('change', url)
-      await this.$store.dispatch('api/changeNode', url)
-    }
-  }
-}
+		currentNode() {
+			return 'Node: ' + this.$store.getters['api/currentNodeHostname'];
+		}
+	},
+
+	methods: {
+		async setNode(url) {
+			this.$emit('change', url);
+			await this.$store.dispatch('api/changeNode', url);
+		}
+	}
+};
 </script>
 
 <style lang="scss">

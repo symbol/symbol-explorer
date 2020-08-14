@@ -1,7 +1,7 @@
 {
   "name": "symbol-explorer",
   "description": "Symbol Block and Network Explorer",
-  "homepage": "https://github.com/nemfoundation/symbol-explorer",
+  "homepage": "https://github.com/nemgrouplimited/symbol-explorer",
   "version": "0.4.1",
   "scripts": {
     "dev": "vue-cli-service serve",
@@ -23,8 +23,10 @@
     "bootstrap-vue": "^2.7.0",
     "chart.js": "^2.9.3",
     "core-js": "^2.6.11",
+    "js-sha3": "^0.8.0",
+    "merkletreejs": "^0.2.9",
     "moment-timezone": "^0.5.28",
-    "symbol-sdk": "^0.20.6",
+    "symbol-sdk": "^0.20.7-alpha-202008131441",
     "url-parse": "^1.4.7",
     "vue": "^2.6.11",
     "vue-apexcharts": "^1.5.2",

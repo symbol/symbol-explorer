@@ -1,9 +1,10 @@
 # Symbol Explorer
 
-[![Build Status](https://travis-ci.com/nemfoundation/symbol-explorer.svg?branch=master)](https://travis-ci.com/nemfoundation/symbol-explorer)
+[![Build Status](https://travis-ci.com/nemgrouplimited/symbol-explorer.svg?branch=main)](https://travis-ci.com/nemgrouplimited/symbol-explorer)
 [![License](https://img.shields.io/badge/License-Apache%202.0-blue.svg)](https://opensource.org/licenses/Apache-2.0)
 
-Symbol Explorer is a read-only web application to browse the content of the blockchain. The explorer supports searching for transactions, accounts, namespaces, mosaics, and blocks information on a given network.
+Symbol Explorer is a read-only web application to browse the content of the blockchain.
+The explorer supports searching for transactions, accounts, namespaces, mosaics, and blocks information on a given network.
 
 ## Requirements
 
@@ -14,7 +15,7 @@ Symbol Explorer is a read-only web application to browse the content of the bloc
 1. Clone the project.
 
 ```
-git clone https://github.com/nemfoundation/symbol-explorer.git
+git clone https://github.com/nemgrouplimited/symbol-explorer.git
 ```
 
 2. Install the required dependencies.
@@ -43,7 +44,7 @@ npm run dev
 
 ### How to change the node list
 
-The file `/src/config/setup.json` contains the node list shown in the node selector dropdown.
+The file `/src/config/setup.json.mt` contains the node list shown in the node selector dropdown.
 
 1. Edit `peersApi.nodes` array to set up the custom node list.
 2. Set `peersApi.defaultNode` property to the default node url.
@@ -58,8 +59,6 @@ Use the following available resources to get help:
 
 ## Contributing
 
-This project is developed and maintained by NEM Foundation.
-
 Contributions are welcome and appreciated.
 Check [CONTRIBUTING](CONTRIBUTING.md) for information on how to contribute.
 
@@ -69,7 +68,7 @@ Copyright 2019-present NEM
 
 Licensed under the [Apache License 2.0](LICENSE)
 
-[self]: https://github.com/nemfoundation/symbol-explorer
+[self]: https://github.com/nemgrouplimited/symbol-explorer
 [docs]: https://nemtech.github.io
-[issues]: https://github.com/nemfoundation/symbol-explorer/issues
+[issues]: https://github.com/nemgrouplimited/symbol-explorer/issues
 [slack]: https://join.slack.com/t/nem2/shared_invite/enQtMzY4MDc2NTg0ODgyLWZmZWRiMjViYTVhZjEzOTA0MzUyMTA1NTA5OWQ0MWUzNTA4NjM5OTJhOGViOTBhNjkxYWVhMWRiZDRkOTE0YmU

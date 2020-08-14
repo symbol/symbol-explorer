@@ -16,8 +16,8 @@
  *
  */
 
-import { Listener } from 'symbol-sdk'
-import http from './http'
+import { Listener } from 'symbol-sdk';
+import http from './http';
 class ListenerService {
   /**
    * Subscribe to new blocks announced to the chain.
@@ -26,20 +26,21 @@ class ListenerService {
    * @returns Array object [Listener, Subscription]
    */
   static subscribeNewBlock = async (onAdd, wsEndpoint) => {
-    const namespaceRepository = http.createRepositoryFactory.createNamespaceRepository()
-    const customWsEndpoint = `${wsEndpoint}/ws`
+  	const namespaceRepository = http.createRepositoryFactory.createNamespaceRepository();
+  	const customWsEndpoint = `${wsEndpoint}/ws`;
 
-    const listener = new Listener(customWsEndpoint, namespaceRepository, WebSocket)
-    await listener.open()
-    let subscription = listener
-      .newBlock()
-      .subscribe(
-        block => onAdd(block),
-        err => console.log(err)
-      )
+  	const listener = new Listener(customWsEndpoint, namespaceRepository, WebSocket);
 
-    return [listener, subscription]
+  	await listener.open();
+  	let subscription = listener
+  		.newBlock()
+  		.subscribe(
+  			block => onAdd(block),
+  			err => console.log(err)
+  		);
+
+  	return [listener, subscription];
   }
 }
 
-export default ListenerService
+export default ListenerService;

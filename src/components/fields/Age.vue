@@ -17,28 +17,28 @@
  */
 
 <template>
-  <TimeSince :date="date">
-    <template slot-scope="interval">
-      {{timeSince(interval)}}
-    </template>
-  </TimeSince>
+	<TimeSince :date="date">
+		<template slot-scope="interval">
+			{{timeSince(interval)}}
+		</template>
+	</TimeSince>
 </template>
 <script>
-import TimeSince from '@/components/TimeSince.vue'
-import helper from '../../helper'
+import TimeSince from '@/components/TimeSince.vue';
+import helper from '../../helper';
 
 export default {
-  name: 'Age',
-  components: {
-    TimeSince
-  },
-  props: {
-    date: String
-  },
-  methods: {
-    timeSince(interval) {
-      return helper.timeSince(interval)
-    }
-  }
-}
+	name: 'Age',
+	components: {
+		TimeSince
+	},
+	props: {
+		date: String
+	},
+	methods: {
+		timeSince(interval) {
+			return helper.timeSince(interval);
+		}
+	}
+};
 </script>

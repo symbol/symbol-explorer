@@ -1,75 +1,77 @@
 <template>
-    <Card :loading="loading">
-        <template #title>
-            {{getNameByKey('baseInfo')}}
-        </template>
+	<Card :loading="loading">
+		<template #title>
+			{{getNameByKey('baseInfo')}}
+		</template>
 
-        <template #body>
-            <b-container fluid style="height: 100%">
-            <b-row>
-                <b-col class="ex-item" sm="3" lg="12">
-                    <div class="ex-item-title">
-                        {{getNameByKey('price')}}
-                    </div>
-                    <div class="ex-item-value">
-                        {{marketData.price}}
-                    </div>
-                </b-col>
-                <b-col class="ex-item" sm="3" lg="12">
-                    <div class="ex-item-title">
-                        {{getNameByKey('marketCap')}}
-                    </div>
-                    <div class="ex-item-value">
-                        {{marketData.marketCap}}
-                    </div>
-                </b-col>
-                <b-col class="ex-item" sm="3" lg="12">
-                    <div class="ex-item-title">
-                        {{getNameByKey('totalTransactions')}}
-                    </div>
-                    <div class="ex-item-value">
-                        {{storageInfo.numTransactions}}
-                    </div>
-                </b-col>
-                <b-col class="ex-item" sm="3" lg="12">
-                    <div class="ex-item-title">
-                        {{getNameByKey('blockHeight')}}
-                    </div>
-                    <div class="ex-item-value">
-                        {{blockHeight}}
-                    </div>
-                </b-col>
-            </b-row>
-            </b-container>
-        </template>
-    </Card>
+		<template #body>
+			<b-container fluid style="height: 100%">
+				<b-row>
+					<b-col class="ex-item" sm="3" lg="12">
+						<div class="ex-item-title">
+							{{getNameByKey('price')}}
+						</div>
+						<div class="ex-item-value">
+							{{marketData.price}}
+						</div>
+					</b-col>
+					<b-col class="ex-item" sm="3" lg="12">
+						<div class="ex-item-title">
+							{{getNameByKey('marketCap')}}
+						</div>
+						<div class="ex-item-value">
+							{{marketData.marketCap}}
+						</div>
+					</b-col>
+					<b-col class="ex-item" sm="3" lg="12">
+						<div class="ex-item-title">
+							{{getNameByKey('totalTransactions')}}
+						</div>
+						<div class="ex-item-value">
+							{{storageInfo.numTransactions}}
+						</div>
+					</b-col>
+					<b-col class="ex-item" sm="3" lg="12">
+						<div class="ex-item-title">
+							{{getNameByKey('blockHeight')}}
+						</div>
+						<div class="ex-item-value">
+							{{blockHeight}}
+						</div>
+					</b-col>
+				</b-row>
+			</b-container>
+		</template>
+	</Card>
 </template>
 
 <script>
-import Card from '@/components/containers/Card.vue'
-import { mapGetters } from 'vuex'
+import Card from '@/components/containers/Card.vue';
+import { mapGetters } from 'vuex';
 
 export default {
-  components: {
-    Card
-  },
+	components: {
+		Card
+	},
 
-  computed: {
-    ...mapGetters({
-      blockHeight: 'chain/getBlockHeight',
-      storageInfo: 'chain/getStorageInfo',
-      marketData: 'chain/getMarketData'
-    }),
+	computed: {
+		...mapGetters({
+			blockHeight: 'chain/getBlockHeight',
+			storageInfo: 'chain/getStorageInfo',
+			marketData: 'chain/getMarketData'
+		}),
 
-    loading() { return !this.blockHeight }
-  },
+		loading() {
+			return !this.blockHeight;
+		}
+	},
 
-  methods: {
-    getNameByKey(e) {
-      return this.$store.getters['ui/getNameByKey'](e)
-    }
-  }
-}
+	methods: {
+		getNameByKey(e) {
+			return this.$store.getters['ui/getNameByKey'](e);
+		}
+	}
+};
 </script>
 
 <style lang="scss" scoped>

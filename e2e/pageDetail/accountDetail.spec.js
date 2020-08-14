@@ -15,7 +15,7 @@ describe('Symbol Explorer Account Detail page', () => {
         })
 
         it('render correct table fields.', () => {
-            const items = ['Address', 'Alias Namespace', 'Address height', 'Public key', 'Importance', 'Type', 'Harvested blocks (all)']
+            const items = ['Address', 'Alias Namespace', 'Address height', 'Public key', 'Importance', 'Account type', 'Harvested blocks (all)']
             cy.renderFieldInTable("accountDetailTitle", items)
         })
     })

@@ -1,65 +1,65 @@
 <template>
-    <Card :loading="loading">
-        <template #title>
-            {{getNameByKey('networkRentalFees')}}
-        </template>
+	<Card :loading="loading">
+		<template #title>
+			{{getNameByKey('networkRentalFees')}}
+		</template>
 
-        <template #body>
-            <b-container fluid>
-            <b-row>
-               <b-col class="ex-item" sm="4" lg="12">
-                    <div class="ex-item-title">
-                        {{getNameByKey('effectiveRootNamespaceRentalFeePerBlock')}}
-                    </div>
-                    <div class="ex-item-value">
-                        {{rentalFees.effectiveRootNamespaceRentalFeePerBlock}}
-                    </div>
-                </b-col>
-                <b-col class="ex-item" sm="4" lg="12">
-                    <div class="ex-item-title">
-                        {{getNameByKey('effectiveChildNamespaceRentalFee')}}
-                    </div>
-                    <div class="ex-item-value">
-                        {{rentalFees.effectiveChildNamespaceRentalFee}}
-                    </div>
-                </b-col>
-                <b-col class="ex-item" sm="4" lg="12">
-                    <div class="ex-item-title">
-                        {{getNameByKey('effectiveMosaicRentalFee')}}
-                    </div>
-                    <div class="ex-item-value">
-                        {{rentalFees.effectiveMosaicRentalFee}}
-                    </div>
-                </b-col>
-            </b-row>
-            </b-container>
-        </template>
-    </Card>
+		<template #body>
+			<b-container fluid>
+				<b-row>
+					<b-col class="ex-item" sm="4" lg="12">
+						<div class="ex-item-title">
+							{{getNameByKey('effectiveRootNamespaceRentalFeePerBlock')}}
+						</div>
+						<div class="ex-item-value">
+							{{rentalFees.effectiveRootNamespaceRentalFeePerBlock}}
+						</div>
+					</b-col>
+					<b-col class="ex-item" sm="4" lg="12">
+						<div class="ex-item-title">
+							{{getNameByKey('effectiveChildNamespaceRentalFee')}}
+						</div>
+						<div class="ex-item-value">
+							{{rentalFees.effectiveChildNamespaceRentalFee}}
+						</div>
+					</b-col>
+					<b-col class="ex-item" sm="4" lg="12">
+						<div class="ex-item-title">
+							{{getNameByKey('effectiveMosaicRentalFee')}}
+						</div>
+						<div class="ex-item-value">
+							{{rentalFees.effectiveMosaicRentalFee}}
+						</div>
+					</b-col>
+				</b-row>
+			</b-container>
+		</template>
+	</Card>
 </template>
 
 <script>
-import Card from '@/components/containers/Card.vue'
-import { mapGetters } from 'vuex'
+import Card from '@/components/containers/Card.vue';
+import { mapGetters } from 'vuex';
 
 export default {
-  components: {
-    Card
-  },
+	components: {
+		Card
+	},
 
-  computed: {
-    ...mapGetters({
-      rentalFees: 'statistic/getNetworkRentalFees',
-      loading: 'statistic/getLoadingInfo',
-      error: 'statistic/getError'
-    })
-  },
+	computed: {
+		...mapGetters({
+			rentalFees: 'statistic/getNetworkRentalFees',
+			loading: 'statistic/getLoadingInfo',
+			error: 'statistic/getError'
+		})
+	},
 
-  methods: {
-    getNameByKey(e) {
-      return this.$store.getters['ui/getNameByKey'](e)
-    }
-  }
-}
+	methods: {
+		getNameByKey(e) {
+			return this.$store.getters['ui/getNameByKey'](e);
+		}
+	}
+};
 </script>
 
 <style lang="scss" scoped>

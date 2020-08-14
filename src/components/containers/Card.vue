@@ -1,45 +1,45 @@
 <template>
-    <b-card class="ex-card">
-        <div class="ex-card-header">
-            <slot name="header" />
-            <slot name="title" />
-            <slot name="control" />
-        </div>
+	<b-card class="ex-card">
+		<div class="ex-card-header">
+			<slot name="header" />
+			<slot name="title" />
+			<slot name="control" />
+		</div>
 
-        <div v-if="loading" class="ex-card-loading">
-            <Loading />
-        </div>
+		<div v-if="loading" class="ex-card-loading">
+			<Loading />
+		</div>
 
-        <div v-if="error" class="ex-card-error">
-            <slot name="error" />
-        </div>
+		<div v-if="error" class="ex-card-error">
+			<slot name="error" />
+		</div>
 
-        <div v-if="!error && !loading" class="ex-card-body">
-            <slot name="body" />
-        </div>
-    </b-card>
+		<div v-if="!error && !loading" class="ex-card-body">
+			<slot name="body" />
+		</div>
+	</b-card>
 </template>
 
 <script>
-import Loading from '@/components/Loading.vue'
+import Loading from '@/components/Loading.vue';
 
 export default {
-  components: {
-    Loading
-  },
+	components: {
+		Loading
+	},
 
-  props: {
-    loading: {
-      type: Boolean,
-      default: false
-    },
+	props: {
+		loading: {
+			type: Boolean,
+			default: false
+		},
 
-    error: {
-      type: Boolean,
-      default: false
-    }
-  }
-}
+		error: {
+			type: Boolean,
+			default: false
+		}
+	}
+};
 </script>
 
 <style lang="scss" scoped>
@@ -73,7 +73,7 @@ export default {
 
     .ex-card-error {
         font-size: 14px;
-        color: #98a8b4;
+        color: $card-error-text-color;
         display: flex;
         justify-content: center;
         text-align: center;

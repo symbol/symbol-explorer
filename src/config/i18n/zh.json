@@ -24,7 +24,6 @@
     "namespaceName": "命名空间的名字",
     "transaction": "交易",
     "transactionHash": "交易Hash",
-    "transactionId": "交易ID",
     "totalTransactions": "共交易",
     "transactionType": "交易类型",
     "addressHeight": "地址的高度",
@@ -93,11 +92,10 @@
     "linkedAccountAddress": "linked Account Address",
     "proofGamma": "Proof Gamma",
     "proofScalar": "Proof Scalar",
-    "proofVarificationHash": "Proof Varification Hash",
+    "proofVerificationHash": "Proof Varification Hash",
     "accountKeyType": "Type",
     "key": "Key",
     "supplementalKeys": "Supplemental Keys",
-    "transactionDescriptor": "Type",
     "transactionDescriptor_16724": "Transfer",
     "transactionDescriptor_16718": "Namespace registration",
     "transactionDescriptor_16974": "Address alias",
@@ -138,7 +136,7 @@
     "mosaicRestrictionListTitle": "Mosaic Restriction List",
     "harvestedBlockTitle": "Harvested Blocks",
 
-    "accountDetailError": "Account is unknown to the network.",
+    "accountDetailError": "This account does not have a public key yet",
     "multisigCosignatoriesError": "Address is not a multisig account.",
     "ownedMosaicsError": "Account owned mosaics are not available.",
     "ownedNamespacesError": "Account owned namespaces are not available.",
@@ -157,7 +155,7 @@
     "resolutionStatementError": "Block resolution statement are not available.",
 
     "mosaicDetailError": "Mosaic does not exist.",
-    "mosaicRestrictionError": "Mosaic does not exist.",
+    "mosaicRestrictionError": "Mosaic restriction does not exist.",
     "mosaicRestrictionListError": "Mosaic global restrictions are not available.",
 
     "namespaceDetailError": "Namespace does not exist.",
@@ -177,5 +175,14 @@
     "nonce": "Nonce",
     "action": "Action",
     "delta": "Delta",
-    "harvestedBlock": "Harvested blocks (all)"
+    "harvestedBlock": "Harvested blocks (all)",
+    "resolutionType": "类型",
+    "receiptType": "类型",
+    "transactionGraphic": "Transaction Graphic",
+    "stateHash": "State Hash",
+    "stateHashSubCacheMerkleRoots": "State Hash Sub Cache Merkle Roots",
+    "blockReceiptsHash": "Receipts Hash",
+    "blockTransactionsHash": "Transactions Hash",
+    "position": "Position",
+    "hash": "Hash"
 }

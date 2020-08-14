@@ -16,93 +16,119 @@
  *
  */
 
-import * as symbol from 'symbol-sdk'
-import { MosaicService } from '../infrastructure'
+import * as symbol from 'symbol-sdk';
+import { MosaicService } from '../infrastructure';
 
-let NODE_URL
-let MARKET_DATA_URL
-let NETWORK_TYPE
-let GENERATION_HASH
-let NETWORK_PROPERTIES
-let NETWORK_CURRECY
+let NODE_URL;
+
+let MARKET_DATA_URL;
+
+let NETWORK_TYPE;
+
+let GENERATION_HASH;
+
+let NETWORK_PROPERTIES;
+
+let NETWORK_CURRECY;
 
 export default class http {
   static init = async (nodeUrl, marketDataUrl) => {
-    NODE_URL = nodeUrl
-    MARKET_DATA_URL = marketDataUrl
-    NETWORK_TYPE = await http.createRepositoryFactory.getNetworkType().toPromise()
-    GENERATION_HASH = await http.createRepositoryFactory.getGenerationHash().toPromise()
-    NETWORK_PROPERTIES = await http.createRepositoryFactory.createNetworkRepository().getNetworkProperties().toPromise()
+  	NODE_URL = nodeUrl;
+  	MARKET_DATA_URL = marketDataUrl;
+  	NETWORK_TYPE = await http.createRepositoryFactory.getNetworkType().toPromise();
+  	GENERATION_HASH = await http.createRepositoryFactory.getGenerationHash().toPromise();
+  	NETWORK_PROPERTIES = await http.createRepositoryFactory.createNetworkRepository().getNetworkProperties()
+  		.toPromise();
 
-    const mosaicId = NETWORK_PROPERTIES.chain.currencyMosaicId.replace(/0x|'/g, '')
-    NETWORK_CURRECY = await MosaicService.getMosaicInfo(mosaicId)
+  	const mosaicId = NETWORK_PROPERTIES.chain.currencyMosaicId.replace(/0x|'/g, '');
+
+  	NETWORK_CURRECY = await MosaicService.getMosaicInfo(mosaicId);
   }
 
   static get networkCurrecy() {
-    const splitNamespace = NETWORK_CURRECY.mosaicAliasName.toUpperCase().split('.')
-    return {
-      namespace: [...splitNamespace, NETWORK_CURRECY.mosaicAliasName.toUpperCase()],
-      mosaicId: NETWORK_CURRECY.mosaicId,
-      divisibility: NETWORK_CURRECY.divisibility
-    }
+  	const splitNamespace = NETWORK_CURRECY.mosaicAliasName.toUpperCase().split('.');
+
+  	return {
+  		namespace: [...splitNamespace, NETWORK_CURRECY.mosaicAliasName.toUpperCase()],
+  		mosaicId: NETWORK_CURRECY.mosaicId,
+  		divisibility: NETWORK_CURRECY.divisibility
+  	};
   }
 
   static get networkProperties() {
-    return new symbol.NetworkConfiguration(NETWORK_PROPERTIES.network, NETWORK_PROPERTIES.chain, NETWORK_PROPERTIES.plugins)
+  	return new symbol.NetworkConfiguration(NETWORK_PROPERTIES.network, NETWORK_PROPERTIES.chain, NETWORK_PROPERTIES.plugins);
   }
 
   static get networkConfig() {
-    const convertedTotalChainImportance = +this.networkProperties.chain.totalChainImportance.replace(/'/g, '')
-    const convertedNamespaceGracePeriodDuration = +this.networkProperties.plugins.namespace.namespaceGracePeriodDuration.replace(/d/g, '')
-    const convertedBlockGenerationTargetTime = +this.networkProperties.chain.blockGenerationTargetTime.replace(/s/g, '')
-    const blockPerday = (60 / convertedBlockGenerationTargetTime) * 60 * 24
+  	const convertedTotalChainImportance = +this.networkProperties.chain.totalChainImportance.replace(/'/g, '');
+  	const convertedNamespaceGracePeriodDuration = +this.networkProperties.plugins.namespace.namespaceGracePeriodDuration.replace(/d/g, '');
+  	const convertedBlockGenerationTargetTime = +this.networkProperties.chain.blockGenerationTargetTime.replace(/s/g, '');
+  	const blockPerday = (60 / convertedBlockGenerationTargetTime) * 60 * 24;
 
-    return {
-      MosaicRentalSinkAddress: this.networkProperties.plugins.mosaic.mosaicRentalFeeSinkAddress,
-      NamespaceRentalFeeSinkAddress: this.networkProperties.plugins.namespace.namespaceRentalFeeSinkAddress,
-      NetworkType: this.networkType,
-      NemsisTimestamp: symbol.Deadline.timestampNemesisBlock,
-      TargetBlockTime: convertedBlockGenerationTargetTime,
-      NamespaceGraceDuration: convertedNamespaceGracePeriodDuration * blockPerday,
-      TotalChainImportance: convertedTotalChainImportance
-    }
+  	return {
+  		MosaicRentalSinkAddress: symbol.Address.createFromRawAddress(this.networkProperties.plugins.mosaic.mosaicRentalFeeSinkAddress),
+  		NamespaceRentalFeeSinkAddress: symbol.Address.createFromRawAddress(this.networkProperties.plugins.namespace.namespaceRentalFeeSinkAddress),
+  		NetworkType: this.networkType,
+  		NemsisTimestamp: symbol.Deadline.timestampNemesisBlock,
+  		TargetBlockTime: convertedBlockGenerationTargetTime,
+  		NamespaceGraceDuration: convertedNamespaceGracePeriodDuration * blockPerday,
+  		TotalChainImportance: convertedTotalChainImportance
+  	};
   }
 
   static get marketDataUrl() {
-    return MARKET_DATA_URL
+  	return MARKET_DATA_URL;
   }
 
   static get nodeUrl() {
-    return NODE_URL
+  	return NODE_URL;
   }
 
   static get generationHash() {
-    return GENERATION_HASH
+  	return GENERATION_HASH;
   }
 
   static get networkType() {
-    return NETWORK_TYPE
+  	return NETWORK_TYPE;
   }
 
   static get createRepositoryFactory() {
-    return new symbol.RepositoryFactoryHttp(this.nodeUrl, {
-      networkType: this.networkType,
-      generationHash: this.generationHash
-    })
+  	return new symbol.RepositoryFactoryHttp(this.nodeUrl, {
+  		networkType: this.networkType,
+  		generationHash: this.generationHash
+  	});
   }
 
   static get mosaicService() {
-    const accountRepository = this.createRepositoryFactory.createAccountRepository()
-    const mosaicRepository = this.createRepositoryFactory.createMosaicRepository()
-    return new symbol.MosaicService(accountRepository, mosaicRepository)
+  	const accountRepository = this.createRepositoryFactory.createAccountRepository();
+  	const mosaicRepository = this.createRepositoryFactory.createMosaicRepository();
+
+  	return new symbol.MosaicService(accountRepository, mosaicRepository);
   }
 
   static get namespaceService() {
-    const namespaceRepository = this.createRepositoryFactory.createNamespaceRepository()
-    return new symbol.NamespaceService(namespaceRepository)
+  	const namespaceRepository = this.createRepositoryFactory.createNamespaceRepository();
+
+  	return new symbol.NamespaceService(namespaceRepository);
   }
 
   static get blockPaginationStreamer() {
-    return new symbol.BlockPaginationStreamer(this.createRepositoryFactory.createBlockRepository())
+  	return new symbol.BlockPaginationStreamer(this.createRepositoryFactory.createBlockRepository());
+  }
+
+  static transactionStatementPaginationStreamer() {
+	  return symbol.ReceiptPaginationStreamer.transactionStatements(this.createRepositoryFactory.createReceiptRepository());
+  }
+
+  static addressResolutionStatementPaginationStreamer() {
+	  return symbol.ReceiptPaginationStreamer.addressResolutionStatements(this.createRepositoryFactory.createReceiptRepository());
+  }
+
+  static mosaicResolutionStatementPaginationStreamer() {
+	  return symbol.ReceiptPaginationStreamer.mosaicResolutionStatements(this.createRepositoryFactory.createReceiptRepository());
+  }
+
+  static get transactionPaginationStreamer() {
+  	return new symbol.TransactionPaginationStreamer(this.createRepositoryFactory.createTransactionRepository());
   }
 }

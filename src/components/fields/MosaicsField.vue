@@ -17,53 +17,53 @@
  */
 
 <template>
-    <div class="mosaics-container">
-        <span
-            v-for="(item, index) in value"
-            class="mosaic"
-            :key="'mos_s' + index"
-            :title="'Mosaic: ' + item.id + ' | Amount: ' + item.amount"
-        >
-            <span class="mosaic-name">
-                <router-link :to="getItemHref('mosaicId', item.id)">
-                    <b class="link">{{item.id}}</b>
-                </router-link>
-            </span>
-            <span class="mosaic-amount">
-                <Decimal :value="item.amount" class="decimal"/>
-            </span>
-        </span>
-    </div>
+	<div class="mosaics-container">
+		<span
+			v-for="(item, index) in value"
+			class="mosaic"
+			:key="'mos_s' + index"
+			:title="'Mosaic: ' + item.id + ' | Amount: ' + item.amount"
+		>
+			<span class="mosaic-name">
+				<router-link :to="getItemHref('mosaicId', item.id)">
+					<b class="link">{{item.id}}</b>
+				</router-link>
+			</span>
+			<span class="mosaic-amount">
+				<Decimal :value="item.amount" class="decimal"/>
+			</span>
+		</span>
+	</div>
 </template>
 
 <script>
-import Decimal from '@/components/fields/Decimal.vue'
-import helper from '../../helper'
+import Decimal from '@/components/fields/Decimal.vue';
+import helper from '../../helper';
 
 export default {
-  name: 'MosaicsField',
+	name: 'MosaicsField',
 
-  components: {
-    Decimal
-  },
+	components: {
+		Decimal
+	},
 
-  props: {
-    value: {
-      type: Array,
-      required: true
-    }
-  },
+	props: {
+		value: {
+			type: Array,
+			required: true
+		}
+	},
 
-  methods: {
-    timeSince(interval) {
-      return helper.timeSince(interval)
-    },
+	methods: {
+		timeSince(interval) {
+			return helper.timeSince(interval);
+		},
 
-    getItemHref(itemKey, item) {
-      return this.$store.getters[`ui/getPageHref`]({ pageName: itemKey, param: item })
-    }
-  }
-}
+		getItemHref(itemKey, item) {
+			return this.$store.getters[`ui/getPageHref`]({ pageName: itemKey, param: item });
+		}
+	}
+};
 </script>
 
 <style lang="scss" scoped>

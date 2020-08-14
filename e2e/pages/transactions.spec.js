@@ -11,8 +11,8 @@ describe('Symbol Explorer Transactions list page should', () => {
         cy.renderTable()
     })
 
-    it('render 7 items in table header', () => {
-        cy.renderHeaderItem(7)
+    it('render 6 items in table header', () => {
+        cy.renderHeaderItem(6)
     })
 
     it('render at least 1 row data in the table list', () => {

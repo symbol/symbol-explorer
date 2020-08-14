@@ -1,0 +1,3 @@
+{
+    "transactionInfoFields": ["Block Height", "Transaction Hash", "Date", "Deadline", "Fee", "Signature", "Signer", "Status", "Confirmation"]
+}

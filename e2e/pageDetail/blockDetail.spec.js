@@ -20,7 +20,7 @@ describe('Symbol Explorer Blocks detail page', () => {
         })
 
         it('render correct table fields.', () => {
-            const items = ['Height', 'Date', 'Total Fee', 'Difficulty', 'Fee Multiplier', 'Transactions', 'Harvester', 'Block Hash', 'Proof Gamma', 'Proof Scalar']
+            const items = ['Height', 'Date', 'Total Fee', 'Difficulty', 'Fee Multiplier', 'Transactions', 'Harvester', 'Block Hash', 'Proof Gamma', 'Proof Scalar', 'Beneficiary Address', 'Proof Varification Hash']
             cy.renderFieldInTable("blockDetailTitle", items)
         })
     })
@@ -36,7 +36,7 @@ describe('Symbol Explorer Blocks detail page', () => {
         })
 
         it('render correct table header.', () => {
-            const items = ['Deadline', 'Transaction ID', 'Transaction Hash', 'Type']
+            const items = ['Deadline', 'Transaction Hash', 'Type']
             cy.renderHeaderInTable("blockTransactionsTitle", items)
         })
     })

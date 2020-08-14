@@ -17,42 +17,42 @@
  */
 
 <template>
-  <div>
-    <Card :loading="loading">
-      <template #title>{{metadataEntries}}</template>
+	<div>
+		<Card :loading="loading">
+			<template #title>{{metadataEntries}}</template>
 
-      <template #body>
-        <TableListView :data="data" :pagination="true" :pageSize="5" />
-      </template>
-    </Card>
-  </div>
+			<template #body>
+				<TableListView :data="data" :pagination="true" :pageSize="5" />
+			</template>
+		</Card>
+	</div>
 </template>
 
 <script>
-import TableListView from '@/components/tables/TableListView.vue'
-import Card from '@/components/containers/Card.vue'
+import TableListView from '@/components/tables/TableListView.vue';
+import Card from '@/components/containers/Card.vue';
 
 export default {
-  components: {
-    TableListView,
-    Card
-  },
+	components: {
+		TableListView,
+		Card
+	},
 
-  data() {
-    return {
-      metadataEntries: 'metadataEntriesTitle'
-    }
-  },
+	data() {
+		return {
+			metadataEntries: 'metadataEntriesTitle'
+		};
+	},
 
-  props: {
-    data: {
-      type: Array,
-      required: true
-    },
-    loading: {
-      type: Boolean,
-      required: true
-    }
-  }
-}
+	props: {
+		data: {
+			type: Array,
+			required: true
+		},
+		loading: {
+			type: Boolean,
+			required: true
+		}
+	}
+};
 </script>

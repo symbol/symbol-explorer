@@ -21,17 +21,15 @@
                     "height",
                     "deadline",
                     "transactionHash",
-                    "transactionDescriptor",
-                    "maxFee",
+                    "transactionType",
                     "signer",
                     "recipient"
                 ],
                 "mobileFields": [
                     "height",
-                    "transactionDescriptor",
+                    "transactionType",
                     "transactionHash",
-                    "signer",
-                    "recipient"
+                    "signer"
                 ]
             }
         ]

@@ -16,7 +16,7 @@
  *
  */
 
-import http from './http'
+import http from './http';
 
 class NetworkService {
   /**
@@ -24,9 +24,11 @@ class NetworkService {
    * @returns rental fees information
    */
   static getRentalFees = async () => {
-    const rentalFees = await http.createRepositoryFactory.createNetworkRepository()
-      .getRentalFees().toPromise()
-    return this.formatRentalFees(rentalFees)
+  	const rentalFees = await http.createRepositoryFactory.createNetworkRepository()
+  		.getRentalFees()
+  		.toPromise();
+
+  	return this.formatRentalFees(rentalFees);
   }
 
   /**
@@ -34,9 +36,11 @@ class NetworkService {
    * @returns transaction fees information
    */
   static getTransactionFees = async () => {
-    const transactionFees = await http.createRepositoryFactory.createNetworkRepository()
-      .getTransactionFees().toPromise()
-    return transactionFees
+  	const transactionFees = await http.createRepositoryFactory.createNetworkRepository()
+  		.getTransactionFees()
+  		.toPromise();
+
+  	return transactionFees;
   }
 
   /**
@@ -44,8 +48,9 @@ class NetworkService {
    * @returns Transaction Fees Info for Vue Component
    */
   static getTransactionFeesInfo = async () => {
-    const transactionFees = await this.getTransactionFees()
-    return transactionFees
+  	const transactionFees = await this.getTransactionFees();
+
+  	return transactionFees;
   }
 
   /**
@@ -53,8 +58,9 @@ class NetworkService {
    * @returns Rental Fees Info for Vue Component
    */
   static getRentalFeesInfo = async () => {
-    const rentalFees = await this.getRentalFees()
-    return rentalFees
+  	const rentalFees = await this.getRentalFees();
+
+  	return rentalFees;
   }
 
   /**
@@ -62,10 +68,10 @@ class NetworkService {
    * @returns readable RentalfeesDTO object
    */
   static formatRentalFees = rentalFees => ({
-    effectiveRootNamespaceRentalFeePerBlock: rentalFees.effectiveRootNamespaceRentalFeePerBlock / Math.pow(10, http.networkCurrecy.divisibility),
-    effectiveChildNamespaceRentalFee: rentalFees.effectiveChildNamespaceRentalFee / Math.pow(10, http.networkCurrecy.divisibility),
-    effectiveMosaicRentalFee: rentalFees.effectiveMosaicRentalFee / Math.pow(10, http.networkCurrecy.divisibility)
+  	effectiveRootNamespaceRentalFeePerBlock: rentalFees.effectiveRootNamespaceRentalFeePerBlock / Math.pow(10, http.networkCurrecy.divisibility),
+  	effectiveChildNamespaceRentalFee: rentalFees.effectiveChildNamespaceRentalFee / Math.pow(10, http.networkCurrecy.divisibility),
+  	effectiveMosaicRentalFee: rentalFees.effectiveMosaicRentalFee / Math.pow(10, http.networkCurrecy.divisibility)
   })
 }
 
-export default NetworkService
+export default NetworkService;

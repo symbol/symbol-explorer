@@ -1,15 +1,15 @@
 <template>
-    <div>
-        <div class="page_con">
-            <div class="container">
-                <div class="content">
-                    <h1>404</h1>
-                    <blockquote>That's a Four-Oh-Four.</blockquote>
-                    <router-link v-bind:to="'/'">Take me home.</router-link>
-                </div>
-            </div>
-        </div>
-    </div>
+	<div>
+		<div class="page_con">
+			<div class="container">
+				<div class="content">
+					<h1>404</h1>
+					<blockquote>That's a Four-Oh-Four.</blockquote>
+					<router-link v-bind:to="'/'">Take me home.</router-link>
+				</div>
+			</div>
+		</div>
+	</div>
 </template>
 
 <style lang="scss" scoped>

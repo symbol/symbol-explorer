@@ -1,28 +1,28 @@
 <script>
-import TableListView from '@/components/tables/TableListView.vue'
-import TableInfoView from '@/components/tables/TableInfoView.vue'
-import DropDown from '@/components/controls/Dropdown.vue'
-import Pagination from '@/components/controls/Pagination.vue'
-import Card from '@/components/containers/Card.vue'
-import Modal from '@/components/containers/Modal.vue'
+import TableListView from '@/components/tables/TableListView.vue';
+import TableInfoView from '@/components/tables/TableInfoView.vue';
+import DropDown from '@/components/controls/Dropdown.vue';
+import Pagination from '@/components/controls/Pagination.vue';
+import Card from '@/components/containers/Card.vue';
+import Modal from '@/components/containers/Modal.vue';
 export default {
-  components: {
-    TableListView,
-    TableInfoView,
-    Card,
-    DropDown,
-    Pagination,
-    Modal
-  },
+	components: {
+		TableListView,
+		TableInfoView,
+		Card,
+		DropDown,
+		Pagination,
+		Modal
+	},
 
-  async mounted() {
-    await this.$store.dispatch('initialize', this.$route)
-    if (this.storeNamespaces?.length) {
-      for (const namespace of this.storeNamespaces)
-        await this.$store.dispatch(namespace + '/initialize')
-    }
-  }
-}
+	async mounted() {
+		await this.$store.dispatch('initialize', this.$route);
+		if (this.storeNamespaces?.length) {
+			for (const namespace of this.storeNamespaces)
+				await this.$store.dispatch(namespace + '/initialize');
+		}
+	}
+};
 </script>
 
 <style lang="scss">

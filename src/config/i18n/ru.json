@@ -25,7 +25,6 @@
     "namespaceName": "Имя",
     "transaction": "Транзакция",
     "transactionHash": "Хэш Транзакции",
-    "transactionId": "(ID) Идентификатор Транзакции",
     "totalTransactions": "Всего Транзакций",
     "transactionType": "Тип Транзакции",
     "addressHeight": "Высота Адреса",
@@ -147,7 +146,6 @@
     "index": "No.",
     "networkFees": "Рекомендуемый Множитель Комиссий",
     "networkRentalFees": "Комиссия За Аренду Сети (XYM)",
-    "transactionDescriptor": "Type",
     "transactionDescriptor_16724": "Transfer",
     "transactionDescriptor_16718": "Namespace registration",
     "transactionDescriptor_16974": "Address alias",
@@ -188,7 +186,7 @@
     "mosaicRestrictionListTitle": "Mosaic Restriction List",
     "harvestedBlockTitle": "Harvested Blocks",
 
-    "accountDetailError": "Account is unknown to the network.",
+    "accountDetailError": "This account does not have a public key yet",
     "multisigCosignatoriesError": "Address is not a multisig account.",
     "ownedMosaicsError": "Account owned mosaics are not available.",
     "ownedNamespacesError": "Account owned namespaces are not available.",
@@ -207,7 +205,7 @@
     "resolutionStatementError": "Block resolution statement are not available.",
 
     "mosaicDetailError": "Mosaic does not exist.",
-    "mosaicRestrictionError": "Mosaic does not exist.",
+    "mosaicRestrictionError": "Mosaic restriction does not exist.",
     "mosaicRestrictionListError": "Mosaic global restrictions are not available.",
 
     "namespaceDetailError": "Namespace does not exist.",
@@ -228,5 +226,13 @@
     "action": "Action",
     "delta": "Delta",
     "harvestedBlock": "Harvested blocks (all)",
-    "transactionGraphic": "Схема транзакции"
+    "transactionGraphic": "Схема транзакции",
+    "resolutionType": "Тип",
+    "receiptType": "Тип",
+    "stateHash": "State Hash",
+    "stateHashSubCacheMerkleRoots": "State Hash Sub Cache Merkle Roots",
+    "blockReceiptsHash": "Receipts Hash",
+    "blockTransactionsHash": "Transactions Hash",
+    "position": "Position",
+    "hash": "Hash"
 }

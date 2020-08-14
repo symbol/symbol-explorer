@@ -16,98 +16,107 @@
  *
  */
 
-import Lock from './lock'
-import Constants from '../config/constants'
-import { NamespaceService, MetadataService } from '../infrastructure'
+import Lock from './lock';
+import { Constants, filters } from '../config';
+import { NamespaceService } from '../infrastructure';
 import {
-  DataSet,
-  Timeline,
-  getStateFromManagers,
-  getGettersFromManagers,
-  getMutationsFromManagers,
-  getActionsFromManagers
-} from './manager'
+	DataSet,
+	Pagination,
+	getStateFromManagers,
+	getGettersFromManagers,
+	getMutationsFromManagers,
+	getActionsFromManagers
+} from './manager';
 
-const LOCK = Lock.create()
+const LOCK = Lock.create();
 
 const managers = [
-  new Timeline(
-    'timeline',
-    () => NamespaceService.getNamespaceList(Constants.PageSize),
-    (key, pageSize) => NamespaceService.getNamespaceList(pageSize, key),
-    'namespaceId'
-  ),
-  new DataSet(
-    'info',
-    (namespaceOrHex) => NamespaceService.getNamespaceInfo(namespaceOrHex)
-  ),
-  new DataSet(
-    'namespaceLevel',
-    (namespaceOrHex) => NamespaceService.getNamespaceLevelList(namespaceOrHex)
-  ),
-  new Timeline(
-    'metadatas',
-    (pageSize, store) => MetadataService.getNamespaceMetadataList(store.getters.getCurrentNamespaceId, pageSize),
-    (key, pageSize, store) => MetadataService.getNamespaceMetadataList(store.getters.getCurrentNamespaceId, pageSize, key),
-    'id',
-    10
-  )
-]
+	new Pagination({
+		name: 'timeline',
+		fetchFunction: (pageInfo, filterVaule) => NamespaceService.getNamespaceList(pageInfo, filterVaule),
+		pageInfo: {
+			pageSize: Constants.PageSize
+		},
+		filter: filters.namespace
+	}),
+	new DataSet(
+		'info',
+		(namespaceOrHex) => NamespaceService.getNamespaceInfo(namespaceOrHex)
+	),
+	new DataSet(
+		'namespaceLevel',
+		(namespaceOrHex) => NamespaceService.getNamespaceLevelList(namespaceOrHex)
+	),
+	new Pagination({
+		name: 'metadatas',
+		fetchFunction: (pageInfo, filterValue, store) => NamespaceService.getNamespaceMetadataList(pageInfo, filterValue, store.getters.getCurrentNamespaceId),
+		pageInfo: {
+			pageSize: 10
+		},
+		filter: filters.metadata
+	})
+];
 
 export default {
-  namespaced: true,
-  state: {
-    // If the state has been initialized.
-    initialized: false,
-    ...getStateFromManagers(managers),
-    currentNamespaceId: null
-  },
-  getters: {
-    getInitialized: state => state.initialized,
-    getCurrentNamespaceId: state => state.currentNamespaceId,
-    ...getGettersFromManagers(managers)
-  },
-  mutations: {
-    setInitialized: (state, initialized) => { state.initialized = initialized },
-    setCurrentNamespaceId: (state, currentNamespaceId) => { state.currentNamespaceId = currentNamespaceId },
-    ...getMutationsFromManagers(managers)
-  },
-  actions: {
-    ...getActionsFromManagers(managers),
-    // Initialize the namespace model.
-    async initialize({ commit, dispatch, getters }) {
-      const callback = async () => {
-        await dispatch('initializePage')
-      }
-      await LOCK.initialize(callback, commit, dispatch, getters)
-    },
+	namespaced: true,
+	state: {
+		// If the state has been initialized.
+		initialized: false,
+		...getStateFromManagers(managers),
+		currentNamespaceId: null
+	},
+	getters: {
+		getInitialized: state => state.initialized,
+		getCurrentNamespaceId: state => state.currentNamespaceId,
+		...getGettersFromManagers(managers)
+	},
+	mutations: {
+		setInitialized: (state, initialized) => {
+			state.initialized = initialized;
+		},
+		setCurrentNamespaceId: (state, currentNamespaceId) => {
+			state.currentNamespaceId = currentNamespaceId;
+		},
+		...getMutationsFromManagers(managers)
+	},
+	actions: {
+		...getActionsFromManagers(managers),
+		// Initialize the namespace model.
+		async initialize({ commit, dispatch, getters }) {
+			const callback = async () => {
+				await dispatch('initializePage');
+			};
 
-    // Uninitialize the namespace model.
-    async uninitialize({ commit, dispatch, getters }) {
-      const callback = async () => {
-        getters.timeline?.uninitialize()
-      }
-      await LOCK.uninitialize(callback, commit, dispatch, getters)
-    },
+			await LOCK.initialize(callback, commit, dispatch, getters);
+		},
 
-    // Fetch data from the SDK and initialize the page.
-    initializePage(context) {
-      context.getters.timeline.setStore(context).initialFetch()
-    },
+		// Uninitialize the namespace model.
+		async uninitialize({ commit, dispatch, getters }) {
+			const callback = async () => {
+        getters.timeline?.uninitialize();
+			};
 
-    // Fetch data from the SDK.
-    fetchNamespaceInfo(context, payload) {
-      context.dispatch('uninitializeDetail')
-      context.commit('setCurrentNamespaceId', payload.namespaceId)
-      context.getters.info.setStore(context).initialFetch(payload.namespaceId)
-      context.getters.namespaceLevel.setStore(context).initialFetch(payload.namespaceId)
-      context.getters.metadatas.setStore(context).initialFetch(payload.namespaceId)
-    },
+			await LOCK.uninitialize(callback, commit, dispatch, getters);
+		},
 
-    uninitializeDetail(context) {
-      context.getters.info.setStore(context).uninitialize()
-      context.getters.namespaceLevel.setStore(context).uninitialize()
-      context.getters.metadatas.setStore(context).uninitialize()
-    }
-  }
-}
+		// Fetch data from the SDK and initialize the page.
+		initializePage(context) {
+			context.getters.timeline.setStore(context).initialFetch();
+		},
+
+		// Fetch data from the SDK.
+		fetchNamespaceInfo(context, payload) {
+			context.dispatch('uninitializeDetail');
+			context.commit('setCurrentNamespaceId', payload.namespaceId);
+			context.getters.info.setStore(context).initialFetch(payload.namespaceId);
+			context.getters.namespaceLevel.setStore(context).initialFetch(payload.namespaceId);
+			context.getters.metadatas.setStore(context).initialFetch(payload.namespaceId);
+		},
+
+		uninitializeDetail(context) {
+			context.getters.info.setStore(context).uninitialize();
+			context.getters.namespaceLevel.setStore(context).uninitialize();
+			context.getters.metadatas.setStore(context).uninitialize();
+		}
+	}
+};

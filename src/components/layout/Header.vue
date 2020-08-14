@@ -1,49 +1,49 @@
 <template>
-    <div class="blue-gradinet ex-header">
-        <div class="width-limiter">
-            <b-container fluid>
-                <b-row>
-                    <b-col md="3" class="header-left">
-                        <router-link to="/" class="d-none d-md-block">
-                            <img src="../../styles/img/symbol_logo_white_aw.png" class="header-logo"/>
-                        </router-link>
-                    </b-col>
-                    <b-col md="6" class="header-center">
+	<div class="blue-gradinet ex-header">
+		<div class="width-limiter">
+			<b-container fluid>
+				<b-row>
+					<b-col md="3" class="header-left">
+						<router-link to="/" class="d-none d-md-block">
+							<img src="../../styles/img/symbol_logo_white_aw.png" class="header-logo"/>
+						</router-link>
+					</b-col>
+					<b-col md="6" class="header-center">
 
-                        <div class="header-title">
-                            {{getNameByKey('blockchainExplorerTitle')}}
-                        </div>
-                        <div class="header-sub-title">
-                            {{getNameByKey('searchBoxTitle')}}
-                        </div>
+						<div class="header-title">
+							{{getNameByKey('blockchainExplorerTitle')}}
+						</div>
+						<div class="header-sub-title">
+							{{getNameByKey('searchBoxTitle')}}
+						</div>
 
-                    </b-col>
-                    <b-col md="3" class="header-right">
-                        <SearchBox class='search-box' />
-                        <LanguageSelector class="d-none d-md-block language-selector"/>
-                    </b-col>
-                </b-row>
-            </b-container>
-        </div>
-    </div>
+					</b-col>
+					<b-col md="3" class="header-right">
+						<SearchBox class='search-box' />
+						<LanguageSelector class="d-none d-md-block language-selector"/>
+					</b-col>
+				</b-row>
+			</b-container>
+		</div>
+	</div>
 </template>
 
 <script>
-import SearchBox from '@/components/controls/SearchBox.vue'
-import LanguageSelector from '@/components/controls/LanguageSelector.vue'
+import SearchBox from '@/components/controls/SearchBox.vue';
+import LanguageSelector from '@/components/controls/LanguageSelector.vue';
 
 export default {
-  components: {
-    SearchBox,
-    LanguageSelector
-  },
+	components: {
+		SearchBox,
+		LanguageSelector
+	},
 
-  methods: {
-    getNameByKey(e) {
-      return this.$store.getters['ui/getNameByKey'](e)
-    }
-  }
-}
+	methods: {
+		getNameByKey(e) {
+			return this.$store.getters['ui/getNameByKey'](e);
+		}
+	}
+};
 </script>
 
 <style lang="scss" scoped>

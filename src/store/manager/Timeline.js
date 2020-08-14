@@ -15,189 +15,198 @@
  * limitations under the License.
  *
  */
-import Constants from '../../config/constants'
+import Constants from '../../config/constants';
 
 export default class Timeline {
-  constructor(name, initialFuntion, fetchFunction, keyName, pageSize = Constants.PageSize) {
-    if (typeof name !== 'string')
-      throw Error('Failed to construct Timeline. Name is not provided')
-    // if(!(store && store.state && store.getters && store.commit && store.dispatch))
-    //    throw Error('Failed to construct Timeline. Store context is not provided');
-    if (typeof initialFuntion !== 'function')
-      throw Error('Cannot create timeline. Initial function is not provided')
-    if (typeof fetchFunction !== 'function')
-      throw Error('Cannot create timeline. Fetch function is not provided')
-    if (keyName === void 0)
-      throw Error('Cannot create timeline. Key is not provided')
+	constructor(name, initialFuntion, fetchFunction, keyName, pageSize = Constants.PageSize) {
+		if (typeof name !== 'string')
+			throw Error('Failed to construct Timeline. Name is not provided');
+		// if(!(store && store.state && store.getters && store.commit && store.dispatch))
+		//    throw Error('Failed to construct Timeline. Store context is not provided');
+		if (typeof initialFuntion !== 'function')
+			throw Error('Cannot create timeline. Initial function is not provided');
+		if (typeof fetchFunction !== 'function')
+			throw Error('Cannot create timeline. Fetch function is not provided');
+		if (keyName === void 0)
+			throw Error('Cannot create timeline. Key is not provided');
 
-    this.name = name
-    this.initialFuntion = initialFuntion
-    this.fetchFunction = fetchFunction
-    this.keyName = keyName
-    this.pageSize = pageSize
-    this.data = []
-    this.next = []
-    this.index = 0
-    this.keys = []
-    this.loading = false
-    this.error = false
-    this.store = {}
-    this.addLatestItem = this.addLatestItem.bind(this)
-    this.initialized = false
-  }
+		this.name = name;
+		this.initialFuntion = initialFuntion;
+		this.fetchFunction = fetchFunction;
+		this.keyName = keyName;
+		this.pageSize = pageSize;
+		this.data = [];
+		this.next = [];
+		this.index = 0;
+		this.keys = [];
+		this.loading = false;
+		this.error = false;
+		this.store = {};
+		this.addLatestItem = this.addLatestItem.bind(this);
+		this.initialized = false;
+	}
 
-  static empty() {
-    return {
-      data: [],
-      canFetchNext: false,
-      canFetchPrevious: false,
-      fetchNext: () => { },
-      fetchPrevious: () => { },
-      reset: () => { }
-    }
-  }
+	static empty() {
+		return {
+			data: [],
+			canFetchNext: false,
+			canFetchPrevious: false,
+			fetchNext: () => { },
+			fetchPrevious: () => { },
+			reset: () => { }
+		};
+	}
 
-  setStore(store) {
-    this.store = store
-    this.store.dispatch(this.name, this)
-    return this
-  }
+	setStore(store) {
+		this.store = store;
+		this.store.dispatch(this.name, this);
+		return this;
+	}
 
-  initialFetch() {
-    if (!this.initialized) {
-      this.initialized = true
-      return this.fetch()
-    }
-  }
+	initialFetch() {
+		if (!this.initialized) {
+			this.initialized = true;
+			return this.fetch();
+		}
+	}
 
-  uninitialize() {
-    this.initialized = false
-    this.data = []
-    this.next = []
-    this.index = 0
-    this.keys = []
-    this.loading = true
-    this.error = false
-  }
+	uninitialize() {
+		this.initialized = false;
+		this.data = [];
+		this.next = [];
+		this.index = 0;
+		this.keys = [];
+		this.loading = true;
+		this.error = false;
+	}
 
-  async fetch() {
-    this.loading = true
-    this.store.dispatch(this.name, this)
+	async fetch() {
+		this.loading = true;
+		this.store.dispatch(this.name, this);
 
-    this.index = 0
-    this.keys = []
-    try {
-      this.data = await this.initialFuntion(this.pageSize, this.store)
-      if (this.data?.length) {
-        const lastElement = this.data[this.data.length - 1]
-        const key = lastElement[this.keyName]
-        this.next = await this.fetchFunction(key, this.pageSize, this.store)
-        this.keys.push(key)
-        this.createNewKey()
-      }
-    } catch (e) {
-      console.error(e)
-      this.error = true
-    }
-    this.loading = false
+		this.index = 0;
+		this.keys = [];
+		try {
+			this.data = await this.initialFuntion(this.pageSize, this.store);
+			if (this.data?.length) {
+				const lastElement = this.data[this.data.length - 1];
+				const key = lastElement[this.keyName];
 
-    this.store.dispatch(this.name, this)
-    return this
-  }
+				this.next = await this.fetchFunction(key, this.pageSize, this.store);
+				this.keys.push(key);
+				this.createNewKey();
+			}
+		}
+		catch (e) {
+			console.error(e);
+			this.error = true;
+		}
+		this.loading = false;
 
-  get canFetchPrevious() {
-    return this.index > 0 && this.loading === false
-  }
+		this.store.dispatch(this.name, this);
+		return this;
+	}
 
-  get canFetchNext() {
-    return this.next?.length > 0 && this.loading === false
-  }
+	get canFetchPrevious() {
+		return this.index > 0 && this.loading === false;
+	}
 
-  get nextKeyValue() {
-    if (this.next?.length)
-      return this.next[this.next.length - 1][this.keyName]
-  }
+	get canFetchNext() {
+		return this.next?.length > 0 && this.loading === false;
+	}
 
-  get previousKeyValue() {
-    return this.keys[this.keys.length - 4]
-  }
+	get nextKeyValue() {
+		if (this.next?.length)
+			return this.next[this.next.length - 1][this.keyName];
+	}
 
-  get isLive() {
-    return this.index === 0
-  }
+	get previousKeyValue() {
+		return this.keys[this.keys.length - 4];
+	}
 
-  createNewKey() {
-    if (this.next?.length) {
-      const newKeyValue = this.next[this.next.length - 1][this.keyName]
-      this.keys.push(newKeyValue)
-      return newKeyValue
-    } else
-      this.keys.push(null)
-  }
+	get isLive() {
+		return this.index === 0;
+	}
 
-  async fetchNext() {
-    if (this.canFetchNext) {
-      this.loading = true
-      this.store.dispatch(this.name, this)
+	createNewKey() {
+		if (this.next?.length) {
+			const newKeyValue = this.next[this.next.length - 1][this.keyName];
 
-      this.data = [].concat.apply([], this.next)
-      try {
-        this.next = await this.fetchFunction(this.nextKeyValue, this.pageSize, this.store)
-        this.createNewKey()
-        this.index++
-      } catch (e) {
-        this.error = true
-        console.error(e)
-      }
-    } else
-      console.error('Timeline cannot fetch next')
-    this.loading = false
+			this.keys.push(newKeyValue);
+			return newKeyValue;
+		}
+		else
+			this.keys.push(null);
+	}
 
-    this.store.dispatch(this.name, this)
-    return this
-  }
+	async fetchNext() {
+		if (this.canFetchNext) {
+			this.loading = true;
+			this.store.dispatch(this.name, this);
 
-  async fetchPrevious() {
-    if (this.canFetchPrevious) {
-      this.loading = true
-      this.store.dispatch(this.name, this)
+			this.data = [].concat.apply([], this.next);
+			try {
+				this.next = await this.fetchFunction(this.nextKeyValue, this.pageSize, this.store);
+				this.createNewKey();
+				this.index++;
+			}
+			catch (e) {
+				this.error = true;
+				console.error(e);
+			}
+		}
+		else
+			console.error('Timeline cannot fetch next');
+		this.loading = false;
 
-      this.next = [].concat.apply([], this.data)
-      try {
-        this.data = await this.fetchFunction(this.previousKeyValue, this.pageSize, this.store)
-        this.keys.pop()
-        this.index--
-      } catch (e) {
-        this.error = true
-        console.error(e)
-      }
-    } else
-      return this.fetch()
-    this.loading = false
+		this.store.dispatch(this.name, this);
+		return this;
+	}
 
-    this.store.dispatch(this.name, this)
-    return this
-  }
+	async fetchPrevious() {
+		if (this.canFetchPrevious) {
+			this.loading = true;
+			this.store.dispatch(this.name, this);
 
-  async reset() {
-    return this.fetch()
-  }
+			this.next = [].concat.apply([], this.data);
+			try {
+				this.data = await this.fetchFunction(this.previousKeyValue, this.pageSize, this.store);
+				this.keys.pop();
+				this.index--;
+			}
+			catch (e) {
+				this.error = true;
+				console.error(e);
+			}
+		}
+		else
+			return this.fetch();
+		this.loading = false;
 
-  // Add latest item to current.
-  addLatestItem(item, keyName = this.keyName) {
-    if (this.isLive) {
-      if (this.data?.length && this.data[0][keyName] === item[keyName])
-        console.error('internal error: attempted to add duplicate item to timeline.')
-      else {
-        const data = [item, ...this.data]
-        const next = [data.pop(), ...this.next]
-        this.data = [].concat.apply([], data)
-        this.next.pop()
-        this.next = [].concat.apply([], next)
+		this.store.dispatch(this.name, this);
+		return this;
+	}
 
-        this.store.dispatch(this.name, this)
-        return this
-      }
-    }
-  }
+	async reset() {
+		return this.fetch();
+	}
+
+	// Add latest item to current.
+	addLatestItem(item, keyName = this.keyName) {
+		if (this.isLive) {
+			if (this.data?.length && this.data[0][keyName] === item[keyName])
+				console.error('internal error: attempted to add duplicate item to timeline.');
+			else {
+				const data = [item, ...this.data];
+				const next = [data.pop(), ...this.next];
+
+				this.data = [].concat.apply([], data);
+				this.next.pop();
+				this.next = [].concat.apply([], next);
+
+				this.store.dispatch(this.name, this);
+				return this;
+			}
+		}
+	}
 }

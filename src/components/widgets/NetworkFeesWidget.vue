@@ -1,73 +1,73 @@
 <template>
-    <Card :loading="loading">
-        <template #title>
-            {{getNameByKey('networkFees')}}
-        </template>
+	<Card :loading="loading">
+		<template #title>
+			{{getNameByKey('networkFees')}}
+		</template>
 
-        <template #body>
-            <b-container fluid>
-            <b-row>
-               <b-col class="ex-item" sm="3" lg="12">
-                    <div class="ex-item-title">
-                        {{getNameByKey('averageFeeMultiplier')}}
-                    </div>
-                    <div class="ex-item-value">
-                        {{transactionFees.averageFeeMultiplier}}
-                    </div>
-                </b-col>
-                <b-col class="ex-item" sm="3" lg="12">
-                    <div class="ex-item-title">
-                        {{getNameByKey('medianFeeMultiplier')}}
-                    </div>
-                    <div class="ex-item-value">
-                        {{transactionFees.medianFeeMultiplier}}
-                    </div>
-                </b-col>
-                <b-col class="ex-item" sm="3" lg="12">
-                    <div class="ex-item-title">
-                        {{getNameByKey('highestFeeMultiplier')}}
-                    </div>
-                    <div class="ex-item-value">
-                        {{transactionFees.highestFeeMultiplier}}
-                    </div>
-                </b-col>
-                <b-col class="ex-item" sm="3" lg="12">
-                    <div class="ex-item-title">
-                        {{getNameByKey('lowestFeeMultiplier')}}
-                    </div>
-                    <div class="ex-item-value">
-                        {{transactionFees.lowestFeeMultiplier}}
-                    </div>
-                </b-col>
-            </b-row>
-            </b-container>
-        </template>
-    </Card>
+		<template #body>
+			<b-container fluid>
+				<b-row>
+					<b-col class="ex-item" sm="3" lg="12">
+						<div class="ex-item-title">
+							{{getNameByKey('averageFeeMultiplier')}}
+						</div>
+						<div class="ex-item-value">
+							{{transactionFees.averageFeeMultiplier}}
+						</div>
+					</b-col>
+					<b-col class="ex-item" sm="3" lg="12">
+						<div class="ex-item-title">
+							{{getNameByKey('medianFeeMultiplier')}}
+						</div>
+						<div class="ex-item-value">
+							{{transactionFees.medianFeeMultiplier}}
+						</div>
+					</b-col>
+					<b-col class="ex-item" sm="3" lg="12">
+						<div class="ex-item-title">
+							{{getNameByKey('highestFeeMultiplier')}}
+						</div>
+						<div class="ex-item-value">
+							{{transactionFees.highestFeeMultiplier}}
+						</div>
+					</b-col>
+					<b-col class="ex-item" sm="3" lg="12">
+						<div class="ex-item-title">
+							{{getNameByKey('lowestFeeMultiplier')}}
+						</div>
+						<div class="ex-item-value">
+							{{transactionFees.lowestFeeMultiplier}}
+						</div>
+					</b-col>
+				</b-row>
+			</b-container>
+		</template>
+	</Card>
 </template>
 
 <script>
-import Card from '@/components/containers/Card.vue'
-import { mapGetters } from 'vuex'
+import Card from '@/components/containers/Card.vue';
+import { mapGetters } from 'vuex';
 
 export default {
-  components: {
-    Card
-  },
+	components: {
+		Card
+	},
 
-  computed: {
-    ...mapGetters({
-      transactionFees: 'statistic/getNetworkTransactionFees',
-      loading: 'statistic/getLoadingInfo',
-      error: 'statistic/getError'
-    })
-  },
+	computed: {
+		...mapGetters({
+			transactionFees: 'statistic/getNetworkTransactionFees',
+			loading: 'statistic/getLoadingInfo',
+			error: 'statistic/getError'
+		})
+	},
 
-  methods: {
-    getNameByKey(e) {
-      return this.$store.getters['ui/getNameByKey'](e)
-    }
-  }
-}
+	methods: {
+		getNameByKey(e) {
+			return this.$store.getters['ui/getNameByKey'](e);
+		}
+	}
+};
 </script>
 
 <style lang="scss" scoped>
