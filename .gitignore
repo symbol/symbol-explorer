@@ -3,6 +3,7 @@ node_modules
 node-monitor
 /dist
 /www
+*.log
 
 # local env files
 .env.local

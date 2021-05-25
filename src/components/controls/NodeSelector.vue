@@ -25,14 +25,19 @@ export default {
 			let options = {};
 
 			this.nodeList.forEach(node => {
-				options[node.toString()] = node.hostname;
-			}
-			);
+				const hostname = this.getHostname(node);
+
+				options[node.toString()] = hostname;
+			});
+
 			return options;
 		},
 
 		currentNode() {
-			return 'Node: ' + this.$store.getters['api/currentNodeHostname'];
+			const node = new URL(this.$store.getters['api/currentNode']);
+			const hostname = this.getHostname(node);
+
+			return 'Node: ' + hostname;
 		}
 	},
 
@@ -40,6 +45,12 @@ export default {
 		async setNode(url) {
 			this.$emit('change', url);
 			await this.$store.dispatch('api/changeNode', url);
+		},
+
+		getHostname(node) {
+			const nodeURL = node.href.replace(window.location.origin + '/connect/', '');
+
+			return new URL(nodeURL).hostname;
 		}
 	}
 };
