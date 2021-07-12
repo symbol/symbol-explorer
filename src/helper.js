@@ -35,7 +35,9 @@ const getNetworkTypeAddressFormat = {
 	[NetworkType.MAIN_NET]: 'nN',
 	[NetworkType.MIJIN]: 'mM',
 	[NetworkType.MIJIN_TEST]: 'sS',
-	[NetworkType.TEST_NET]: 'tT'
+	[NetworkType.TEST_NET]: 'tT',
+	[NetworkType.PRIVATE_TEST]: 'vV',
+	[NetworkType.PRIVATE]: 'pP'
 };
 
 class helper {
