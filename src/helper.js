@@ -415,7 +415,7 @@ class helper {
 
 	static truncString(str, strLen = 4) {
 		if (typeof str === 'string') {
-			if (str.length > strLen * 2)
+			if (str.length > strLen * 2 + 1)
 				return `${str.substring(0, strLen)}...${str.substring(str.length - strLen, str.length)}`;
 			return str;
 		}
